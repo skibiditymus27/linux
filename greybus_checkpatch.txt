@@ -1,0 +1,734 @@
+----------------------------------------
+drivers/staging/greybus/arche-apb-ctrl.c
+----------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+WARNING: DT compatible string "usbffff,2" appears un-documented -- check ./Documentation/devicetree/bindings/
+#466: FILE: drivers/staging/greybus/arche-apb-ctrl.c:466:
++	{ .compatible = "usbffff,2", },
+
+WARNING: DT compatible string vendor "usbffff" appears un-documented -- check ./Documentation/devicetree/bindings/vendor-prefixes.yaml
+#466: FILE: drivers/staging/greybus/arche-apb-ctrl.c:466:
++	{ .compatible = "usbffff,2", },
+
+total: 0 errors, 2 warnings, 0 checks, 490 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/arche-apb-ctrl.c has style problems, please review.
+----------------------------------------
+drivers/staging/greybus/arche-platform.c
+----------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: line length of 101 exceeds 100 columns
+#183: FILE: drivers/staging/greybus/arche-platform.c:183:
++									     WD_STATE_COLDBOOT_TRIG);
+
+WARNING: DT compatible string "google,arche-platform" appears un-documented -- check ./Documentation/devicetree/bindings/
+#619: FILE: drivers/staging/greybus/arche-platform.c:619:
++	{ .compatible = "google,arche-platform", },
+
+total: 0 errors, 1 warnings, 1 checks, 660 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/arche-platform.c has style problems, please review.
+-----------------------------------------
+drivers/staging/greybus/audio_apbridgea.c
+-----------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 205 lines checked
+
+drivers/staging/greybus/audio_apbridgea.c has no obvious style problems and is ready for submission.
+-------------------------------------
+drivers/staging/greybus/audio_codec.c
+-------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+WARNING: DT compatible string "toshiba,apb-dummy-codec" appears un-documented -- check ./Documentation/devicetree/bindings/
+#1081: FILE: drivers/staging/greybus/audio_codec.c:1081:
++	{ .compatible = "toshiba,apb-dummy-codec", },
+
+total: 0 errors, 1 warnings, 0 checks, 1100 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/audio_codec.c has style problems, please review.
+----------------------------------
+drivers/staging/greybus/audio_gb.c
+----------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 225 lines checked
+
+drivers/staging/greybus/audio_gb.c has no obvious style problems and is ready for submission.
+--------------------------------------
+drivers/staging/greybus/audio_helper.c
+--------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: Macro argument reuse 'dir' - possible side-effects?
+#11: FILE: drivers/staging/greybus/audio_helper.c:11:
++#define gbaudio_dapm_for_each_direction(dir) \
++	for ((dir) = SND_SOC_DAPM_DIR_IN; (dir) <= SND_SOC_DAPM_DIR_OUT; \
++		(dir)++)
+
+total: 0 errors, 0 warnings, 1 checks, 180 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/audio_helper.c has style problems, please review.
+---------------------------------------
+drivers/staging/greybus/audio_manager.c
+---------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 187 lines checked
+
+drivers/staging/greybus/audio_manager.c has no obvious style problems and is ready for submission.
+----------------------------------------------
+drivers/staging/greybus/audio_manager_module.c
+----------------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+WARNING: char * array declaration might be better as static const
+#162: FILE: drivers/staging/greybus/audio_manager_module.c:162:
++	char *envp[] = {
+
+total: 0 errors, 1 warnings, 0 checks, 241 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/audio_manager_module.c has style problems, please review.
+---------------------------------------------
+drivers/staging/greybus/audio_manager_sysfs.c
+---------------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 101 lines checked
+
+drivers/staging/greybus/audio_manager_sysfs.c has no obvious style problems and is ready for submission.
+--------------------------------------
+drivers/staging/greybus/audio_module.c
+--------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 479 lines checked
+
+drivers/staging/greybus/audio_module.c has no obvious style problems and is ready for submission.
+----------------------------------------
+drivers/staging/greybus/audio_topology.c
+----------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 1443 lines checked
+
+drivers/staging/greybus/audio_topology.c has no obvious style problems and is ready for submission.
+----------------------------------------
+drivers/staging/greybus/authentication.c
+----------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: struct mutex definition without comment
+#33: FILE: drivers/staging/greybus/authentication.c:33:
++	struct mutex		mutex;
+
+total: 0 errors, 0 warnings, 1 checks, 429 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/authentication.c has style problems, please review.
+---------------------------------
+drivers/staging/greybus/bootrom.c
+---------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 526 lines checked
+
+drivers/staging/greybus/bootrom.c has no obvious style problems and is ready for submission.
+--------------------------------
+drivers/staging/greybus/camera.c
+--------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: struct mutex definition without comment
+#56: FILE: drivers/staging/greybus/camera.c:56:
++	struct mutex mutex;
+
+CHECK: Alignment should match open parenthesis
+#267: FILE: drivers/staging/greybus/camera.c:267:
++static const int gb_camera_configure_streams_validate_response(struct gb_camera *gcam,
++		struct gb_camera_configure_streams_response *resp,
+
+total: 0 errors, 0 warnings, 2 checks, 1367 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/camera.c has style problems, please review.
+---------------------------------
+drivers/staging/greybus/fw-core.c
+---------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 311 lines checked
+
+drivers/staging/greybus/fw-core.c has no obvious style problems and is ready for submission.
+-------------------------------------
+drivers/staging/greybus/fw-download.c
+-------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: struct mutex definition without comment
+#41: FILE: drivers/staging/greybus/fw-download.c:41:
++	struct mutex		mutex;
+
+total: 0 errors, 0 warnings, 1 checks, 465 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/fw-download.c has style problems, please review.
+---------------------------------------
+drivers/staging/greybus/fw-management.c
+---------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: struct mutex definition without comment
+#31: FILE: drivers/staging/greybus/fw-management.c:31:
++	struct mutex		mutex;
+
+CHECK: Alignment should match open parenthesis
+#437: FILE: drivers/staging/greybus/fw-management.c:437:
++		ret = fw_mgmt_load_and_validate_operation(fw_mgmt,
++				intf_load.load_method, intf_load.firmware_tag);
+
+total: 0 errors, 0 warnings, 2 checks, 705 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/fw-management.c has style problems, please review.
+-------------------------------
+drivers/staging/greybus/gbphy.c
+-------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 358 lines checked
+
+drivers/staging/greybus/gbphy.c has no obvious style problems and is ready for submission.
+------------------------------
+drivers/staging/greybus/gpio.c
+------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 626 lines checked
+
+drivers/staging/greybus/gpio.c has no obvious style problems and is ready for submission.
+-----------------------------
+drivers/staging/greybus/hid.c
+-----------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 520 lines checked
+
+drivers/staging/greybus/hid.c has no obvious style problems and is ready for submission.
+-----------------------------
+drivers/staging/greybus/i2c.c
+-----------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 322 lines checked
+
+drivers/staging/greybus/i2c.c has no obvious style problems and is ready for submission.
+-------------------------------
+drivers/staging/greybus/light.c
+-------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: struct mutex definition without comment
+#40: FILE: drivers/staging/greybus/light.c:40:
++	struct mutex			lock;
+
+CHECK: struct mutex definition without comment
+#62: FILE: drivers/staging/greybus/light.c:62:
++	struct mutex		lights_lock;
+
+total: 0 errors, 0 warnings, 2 checks, 1343 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/light.c has style problems, please review.
+-----------------------------
+drivers/staging/greybus/log.c
+-----------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 133 lines checked
+
+drivers/staging/greybus/log.c has no obvious style problems and is ready for submission.
+----------------------------------
+drivers/staging/greybus/loopback.c
+----------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: struct mutex definition without comment
+#64: FILE: drivers/staging/greybus/loopback.c:64:
++	struct mutex mutex;
+
+CHECK: Macro argument reuse 'field' - possible side-effects?
+#122: FILE: drivers/staging/greybus/loopback.c:122:
++#define gb_loopback_ro_attr(field)				\
++static ssize_t field##_show(struct device *dev,			\
++			    struct device_attribute *attr,		\
++			    char *buf)					\
++{									\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	return sprintf(buf, "%u\n", gb->field);			\
++}									\
++static DEVICE_ATTR_RO(field)
+
+CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+#122: FILE: drivers/staging/greybus/loopback.c:122:
++#define gb_loopback_ro_attr(field)				\
++static ssize_t field##_show(struct device *dev,			\
++			    struct device_attribute *attr,		\
++			    char *buf)					\
++{									\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	return sprintf(buf, "%u\n", gb->field);			\
++}									\
++static DEVICE_ATTR_RO(field)
+
+CHECK: Macro argument 'name' may be better as '(name)' to avoid precedence issues
+#132: FILE: drivers/staging/greybus/loopback.c:132:
++#define gb_loopback_ro_stats_attr(name, field, type)		\
++static ssize_t name##_##field##_show(struct device *dev,	\
++			    struct device_attribute *attr,		\
++			    char *buf)					\
++{									\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	/* Report 0 for min and max if no transfer succeeded */		\
++	if (!gb->requests_completed)					\
++		return sprintf(buf, "0\n");				\
++	return sprintf(buf, "%" #type "\n", gb->name.field);		\
++}									\
++static DEVICE_ATTR_RO(name##_##field)
+
+CHECK: Macro argument 'name' may be better as '(name)' to avoid precedence issues
+#145: FILE: drivers/staging/greybus/loopback.c:145:
++#define gb_loopback_ro_avg_attr(name)			\
++static ssize_t name##_avg_show(struct device *dev,		\
++			    struct device_attribute *attr,		\
++			    char *buf)					\
++{									\
++	struct gb_loopback_stats *stats;				\
++	struct gb_loopback *gb;						\
++	u64 avg, rem;							\
++	u32 count;							\
++	gb = dev_get_drvdata(dev);			\
++	stats = &gb->name;					\
++	count = stats->count ? stats->count : 1;			\
++	avg = stats->sum + count / 2000000; /* round closest */		\
++	rem = do_div(avg, count);					\
++	rem *= 1000000;							\
++	do_div(rem, count);						\
++	return sprintf(buf, "%llu.%06u\n", avg, (u32)rem);		\
++}									\
++static DEVICE_ATTR_RO(name##_avg)
+
+WARNING: Non-declarative macros with multiple statements should be enclosed in a do - while loop
+#165: FILE: drivers/staging/greybus/loopback.c:165:
++#define gb_loopback_stats_attrs(field)				\
++	gb_loopback_ro_stats_attr(field, min, u);		\
++	gb_loopback_ro_stats_attr(field, max, u);		\
++	gb_loopback_ro_avg_attr(field)
+
+BUT SEE:
+
+   do {} while (0) advice is over-stated in a few situations:
+
+   The more obvious case is macros, like MODULE_PARM_DESC, invoked at
+   file-scope, where C disallows code (it must be in functions).  See
+   $exceptions if you have one to add by name.
+
+   More troublesome is declarative macros used at top of new scope,
+   like DECLARE_PER_CPU.  These might just compile with a do-while-0
+   wrapper, but would be incorrect.  Most of these are handled by
+   detecting struct,union,etc declaration primitives in $exceptions.
+
+   Theres also macros called inside an if (block), which "return" an
+   expression.  These cannot do-while, and need a ({}) wrapper.
+
+   Enjoy this qualification while we work to improve our heuristics.
+
+CHECK: Macro argument reuse 'field' - possible side-effects?
+#165: FILE: drivers/staging/greybus/loopback.c:165:
++#define gb_loopback_stats_attrs(field)				\
++	gb_loopback_ro_stats_attr(field, min, u);		\
++	gb_loopback_ro_stats_attr(field, max, u);		\
++	gb_loopback_ro_avg_attr(field)
+
+CHECK: Macro argument reuse 'field' - possible side-effects?
+#170: FILE: drivers/staging/greybus/loopback.c:170:
++#define gb_loopback_attr(field, type)					\
++static ssize_t field##_show(struct device *dev,				\
++			    struct device_attribute *attr,		\
++			    char *buf)					\
++{									\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	return sprintf(buf, "%" #type "\n", gb->field);			\
++}									\
++static ssize_t field##_store(struct device *dev,			\
++			    struct device_attribute *attr,		\
++			    const char *buf,				\
++			    size_t len)					\
++{									\
++	int ret;							\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	mutex_lock(&gb->mutex);						\
++	ret = sscanf(buf, "%"#type, &gb->field);			\
++	if (ret != 1)							\
++		len = -EINVAL;						\
++	else								\
++		gb_loopback_check_attr(gb, bundle);			\
++	mutex_unlock(&gb->mutex);					\
++	return len;							\
++}									\
++static DEVICE_ATTR_RW(field)
+
+CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+#170: FILE: drivers/staging/greybus/loopback.c:170:
++#define gb_loopback_attr(field, type)					\
++static ssize_t field##_show(struct device *dev,				\
++			    struct device_attribute *attr,		\
++			    char *buf)					\
++{									\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	return sprintf(buf, "%" #type "\n", gb->field);			\
++}									\
++static ssize_t field##_store(struct device *dev,			\
++			    struct device_attribute *attr,		\
++			    const char *buf,				\
++			    size_t len)					\
++{									\
++	int ret;							\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	mutex_lock(&gb->mutex);						\
++	ret = sscanf(buf, "%"#type, &gb->field);			\
++	if (ret != 1)							\
++		len = -EINVAL;						\
++	else								\
++		gb_loopback_check_attr(gb, bundle);			\
++	mutex_unlock(&gb->mutex);					\
++	return len;							\
++}									\
++static DEVICE_ATTR_RW(field)
+
+CHECK: Macro argument reuse 'field' - possible side-effects?
+#196: FILE: drivers/staging/greybus/loopback.c:196:
++#define gb_dev_loopback_ro_attr(field, conn)				\
++static ssize_t field##_show(struct device *dev,		\
++			    struct device_attribute *attr,		\
++			    char *buf)					\
++{									\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	return sprintf(buf, "%u\n", gb->field);				\
++}									\
++static DEVICE_ATTR_RO(field)
+
+CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+#196: FILE: drivers/staging/greybus/loopback.c:196:
++#define gb_dev_loopback_ro_attr(field, conn)				\
++static ssize_t field##_show(struct device *dev,		\
++			    struct device_attribute *attr,		\
++			    char *buf)					\
++{									\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	return sprintf(buf, "%u\n", gb->field);				\
++}									\
++static DEVICE_ATTR_RO(field)
+
+WARNING: Argument 'conn' is not used in function-like macro
+#196: FILE: drivers/staging/greybus/loopback.c:196:
++#define gb_dev_loopback_ro_attr(field, conn)				\
++static ssize_t field##_show(struct device *dev,		\
++			    struct device_attribute *attr,		\
++			    char *buf)					\
++{									\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	return sprintf(buf, "%u\n", gb->field);				\
++}									\
++static DEVICE_ATTR_RO(field)
+
+CHECK: Macro argument reuse 'field' - possible side-effects?
+#206: FILE: drivers/staging/greybus/loopback.c:206:
++#define gb_dev_loopback_rw_attr(field, type)				\
++static ssize_t field##_show(struct device *dev,				\
++			    struct device_attribute *attr,		\
++			    char *buf)					\
++{									\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	return sprintf(buf, "%" #type "\n", gb->field);			\
++}									\
++static ssize_t field##_store(struct device *dev,			\
++			    struct device_attribute *attr,		\
++			    const char *buf,				\
++			    size_t len)					\
++{									\
++	int ret;							\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	mutex_lock(&gb->mutex);						\
++	ret = sscanf(buf, "%"#type, &gb->field);			\
++	if (ret != 1)							\
++		len = -EINVAL;						\
++	else								\
++		gb_loopback_check_attr(gb);		\
++	mutex_unlock(&gb->mutex);					\
++	return len;							\
++}									\
++static DEVICE_ATTR_RW(field)
+
+CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+#206: FILE: drivers/staging/greybus/loopback.c:206:
++#define gb_dev_loopback_rw_attr(field, type)				\
++static ssize_t field##_show(struct device *dev,				\
++			    struct device_attribute *attr,		\
++			    char *buf)					\
++{									\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	return sprintf(buf, "%" #type "\n", gb->field);			\
++}									\
++static ssize_t field##_store(struct device *dev,			\
++			    struct device_attribute *attr,		\
++			    const char *buf,				\
++			    size_t len)					\
++{									\
++	int ret;							\
++	struct gb_loopback *gb = dev_get_drvdata(dev);			\
++	mutex_lock(&gb->mutex);						\
++	ret = sscanf(buf, "%"#type, &gb->field);			\
++	if (ret != 1)							\
++		len = -EINVAL;						\
++	else								\
++		gb_loopback_check_attr(gb);		\
++	mutex_unlock(&gb->mutex);					\
++	return len;							\
++}									\
++static DEVICE_ATTR_RW(field)
+
+CHECK: Lines should not end with a '('
+#591: FILE: drivers/staging/greybus/loopback.c:591:
++static int gb_loopback_async_transfer_complete(
+
+CHECK: Alignment should match open parenthesis
+#682: FILE: drivers/staging/greybus/loopback.c:682:
++		if (!gb_operation_response_alloc(operation,
++				len + sizeof(*response), GFP_KERNEL)) {
+
+total: 0 errors, 2 warnings, 14 checks, 1179 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/loopback.c has style problems, please review.
+--------------------------------------
+drivers/staging/greybus/power_supply.c
+--------------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: struct mutex definition without comment
+#46: FILE: drivers/staging/greybus/power_supply.c:46:
++	struct mutex			supply_lock;
+
+CHECK: struct mutex definition without comment
+#53: FILE: drivers/staging/greybus/power_supply.c:53:
++	struct mutex		supplies_lock;
+
+total: 0 errors, 0 warnings, 2 checks, 1140 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/power_supply.c has style problems, please review.
+-----------------------------
+drivers/staging/greybus/pwm.c
+-----------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 331 lines checked
+
+drivers/staging/greybus/pwm.c has no obvious style problems and is ready for submission.
+-----------------------------
+drivers/staging/greybus/raw.c
+-----------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: struct mutex definition without comment
+#23: FILE: drivers/staging/greybus/raw.c:23:
++	struct mutex list_lock;
+
+total: 0 errors, 0 warnings, 1 checks, 381 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/raw.c has style problems, please review.
+------------------------------
+drivers/staging/greybus/sdio.c
+------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 884 lines checked
+
+drivers/staging/greybus/sdio.c has no obvious style problems and is ready for submission.
+-----------------------------
+drivers/staging/greybus/spi.c
+-----------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 79 lines checked
+
+drivers/staging/greybus/spi.c has no obvious style problems and is ready for submission.
+--------------------------------
+drivers/staging/greybus/spilib.c
+--------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: Alignment should match open parenthesis
+#163: FILE: drivers/staging/greybus/spilib.c:163:
++static struct gb_operation *gb_spi_operation_create(struct gb_spilib *spi,
++		struct gb_connection *connection, struct spi_message *msg)
+
+total: 0 errors, 0 warnings, 1 checks, 571 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/spilib.c has style problems, please review.
+------------------------------
+drivers/staging/greybus/uart.c
+------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: spinlock_t definition without comment
+#53: FILE: drivers/staging/greybus/uart.c:53:
++	spinlock_t read_lock;
+
+CHECK: spinlock_t definition without comment
+#54: FILE: drivers/staging/greybus/uart.c:54:
++	spinlock_t write_lock;
+
+CHECK: struct mutex definition without comment
+#58: FILE: drivers/staging/greybus/uart.c:58:
++	struct mutex mutex;
+
+WARNING: Deprecated use of 'DEFINE_IDR', prefer 'DEFINE_XARRAY' instead
+#70: FILE: drivers/staging/greybus/uart.c:70:
++static DEFINE_IDR(tty_minors);
+
+CHECK: Alignment should match open parenthesis
+#321: FILE: drivers/staging/greybus/uart.c:321:
++	ret = wait_for_completion_timeout(&gb_tty->credits_complete,
++			msecs_to_jiffies(GB_UART_CREDIT_WAIT_TIMEOUT_MSEC));
+
+total: 0 errors, 1 warnings, 4 checks, 1029 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/uart.c has style problems, please review.
+-----------------------------
+drivers/staging/greybus/usb.c
+-----------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 246 lines checked
+
+drivers/staging/greybus/usb.c has no obvious style problems and is ready for submission.
+----------------------------------
+drivers/staging/greybus/vibrator.c
+----------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+total: 0 errors, 0 warnings, 0 checks, 249 lines checked
+
+drivers/staging/greybus/vibrator.c has no obvious style problems and is ready for submission.
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.

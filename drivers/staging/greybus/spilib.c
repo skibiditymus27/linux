@@ -16,31 +16,31 @@
 #include "spilib.h"
 
 struct gb_spilib {
-	struct gb_connection	*connection;
-	struct device		*parent;
-	struct spi_transfer	*first_xfer;
-	struct spi_transfer	*last_xfer;
-	struct spilib_ops	*ops;
-	u32			rx_xfer_offset;
-	u32			tx_xfer_offset;
-	u32			last_xfer_size;
-	unsigned int		op_timeout;
-	u16			mode;
-	u16			flags;
-	u32			bits_per_word_mask;
-	u8			num_chipselect;
-	u32			min_speed_hz;
-	u32			max_speed_hz;
+	struct gb_connection *connection;
+	struct device *parent;
+	struct spi_transfer *first_xfer;
+	struct spi_transfer *last_xfer;
+	struct spilib_ops *ops;
+	u32 rx_xfer_offset;
+	u32 tx_xfer_offset;
+	u32 last_xfer_size;
+	unsigned int op_timeout;
+	u16 mode;
+	u16 flags;
+	u32 bits_per_word_mask;
+	u8 num_chipselect;
+	u32 min_speed_hz;
+	u32 max_speed_hz;
 };
 
-#define GB_SPI_STATE_MSG_DONE		((void *)0)
-#define GB_SPI_STATE_MSG_IDLE		((void *)1)
-#define GB_SPI_STATE_MSG_RUNNING	((void *)2)
-#define GB_SPI_STATE_OP_READY		((void *)3)
-#define GB_SPI_STATE_OP_DONE		((void *)4)
-#define GB_SPI_STATE_MSG_ERROR		((void *)-1)
+#define GB_SPI_STATE_MSG_DONE ((void *)0)
+#define GB_SPI_STATE_MSG_IDLE ((void *)1)
+#define GB_SPI_STATE_MSG_RUNNING ((void *)2)
+#define GB_SPI_STATE_OP_READY ((void *)3)
+#define GB_SPI_STATE_OP_DONE ((void *)4)
+#define GB_SPI_STATE_MSG_ERROR ((void *)-1)
 
-#define XFER_TIMEOUT_TOLERANCE		200
+#define XFER_TIMEOUT_TOLERANCE 200
 
 static struct spi_controller *get_controller_from_spi(struct gb_spilib *spi)
 {
@@ -133,8 +133,8 @@ static int setup_next_xfer(struct gb_spilib *spi, struct spi_message *msg)
 						 transfer_list))
 			msg->state = GB_SPI_STATE_MSG_DONE;
 		else
-			spi->first_xfer = list_next_entry(last_xfer,
-							  transfer_list);
+			spi->first_xfer =
+				list_next_entry(last_xfer, transfer_list);
 		return 0;
 	}
 
@@ -159,8 +159,9 @@ static struct spi_transfer *get_next_xfer(struct spi_transfer *xfer,
 }
 
 /* Routines to transfer data */
-static struct gb_operation *gb_spi_operation_create(struct gb_spilib *spi,
-		struct gb_connection *connection, struct spi_message *msg)
+static struct gb_operation *
+gb_spi_operation_create(struct gb_spilib *spi, struct gb_connection *connection,
+			struct spi_message *msg)
 {
 	struct gb_spi_transfer_request *request;
 	struct spi_device *dev = msg->spi;
@@ -184,8 +185,8 @@ static struct gb_operation *gb_spi_operation_create(struct gb_spilib *spi,
 		spi->last_xfer = xfer;
 
 		if (!xfer->tx_buf && !xfer->rx_buf) {
-			dev_err(spi->parent,
-				"bufferless transfer, length %u\n", xfer->len);
+			dev_err(spi->parent, "bufferless transfer, length %u\n",
+				xfer->len);
 			msg->state = GB_SPI_STATE_MSG_ERROR;
 			return NULL;
 		}
@@ -197,8 +198,8 @@ static struct gb_operation *gb_spi_operation_create(struct gb_spilib *spi,
 			len = xfer->len - spi->tx_xfer_offset;
 			if (!tx_header_fit_operation(tx_size, count, data_max))
 				break;
-			tx_xfer_size = calc_tx_xfer_size(tx_size, count,
-							 len, data_max);
+			tx_xfer_size = calc_tx_xfer_size(tx_size, count, len,
+							 data_max);
 			spi->last_xfer_size = tx_xfer_size;
 		}
 
@@ -240,7 +241,7 @@ static struct gb_operation *gb_spi_operation_create(struct gb_spilib *spi,
 	request->chip_select = spi_get_chipselect(dev, 0);
 
 	gb_xfer = &request->transfers[0];
-	tx_data = gb_xfer + count;	/* place tx data after last gb_xfer */
+	tx_data = gb_xfer + count; /* place tx data after last gb_xfer */
 
 	/* Fill in the transfers array */
 	xfer = spi->first_xfer;
@@ -333,9 +334,8 @@ static int gb_spi_transfer_one_message(struct spi_controller *ctlr,
 	struct gb_operation *operation;
 	int ret = 0;
 
-	spi->first_xfer = list_first_entry_or_null(&msg->transfers,
-						   struct spi_transfer,
-						   transfer_list);
+	spi->first_xfer = list_first_entry_or_null(
+		&msg->transfers, struct spi_transfer, transfer_list);
 	if (!spi->first_xfer) {
 		ret = -ENOMEM;
 		goto out;
@@ -359,8 +359,8 @@ static int gb_spi_transfer_one_message(struct spi_controller *ctlr,
 			if (response)
 				gb_spi_decode_response(spi, msg, response);
 		} else {
-			dev_err(spi->parent,
-				"transfer operation failed: %d\n", ret);
+			dev_err(spi->parent, "transfer operation failed: %d\n",
+				ret);
 			msg->state = GB_SPI_STATE_MSG_ERROR;
 		}
 
@@ -443,7 +443,7 @@ static int gb_spi_setup_device(struct gb_spilib *spi, u8 cs)
 	struct spi_controller *ctlr = get_controller_from_spi(spi);
 	struct gb_spi_device_config_request request;
 	struct gb_spi_device_config_response response;
-	struct spi_board_info spi_board = { {0} };
+	struct spi_board_info spi_board = { { 0 } };
 	struct spi_device *spidev;
 	int ret;
 	u8 dev_type;
@@ -451,8 +451,8 @@ static int gb_spi_setup_device(struct gb_spilib *spi, u8 cs)
 	request.chip_select = cs;
 
 	ret = gb_operation_sync(spi->connection, GB_SPI_TYPE_DEVICE_CONFIG,
-				&request, sizeof(request),
-				&response, sizeof(response));
+				&request, sizeof(request), &response,
+				sizeof(response));
 	if (ret < 0)
 		return ret;
 
@@ -470,10 +470,10 @@ static int gb_spi_setup_device(struct gb_spilib *spi, u8 cs)
 	else
 		return -EINVAL;
 
-	spi_board.mode		= le16_to_cpu(response.mode);
-	spi_board.bus_num	= ctlr->bus_num;
-	spi_board.chip_select	= cs;
-	spi_board.max_speed_hz	= le32_to_cpu(response.max_speed_hz);
+	spi_board.mode = le16_to_cpu(response.mode);
+	spi_board.bus_num = ctlr->bus_num;
+	spi_board.chip_select = cs;
+	spi_board.max_speed_hz = le32_to_cpu(response.max_speed_hz);
 
 	spidev = spi_new_device(ctlr, &spi_board);
 	if (!spidev)

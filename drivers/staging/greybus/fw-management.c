@@ -18,42 +18,42 @@
 #include "firmware.h"
 #include "greybus_firmware.h"
 
-#define FW_MGMT_TIMEOUT_MS		1000
+#define FW_MGMT_TIMEOUT_MS 1000
 
 struct fw_mgmt {
-	struct device		*parent;
-	struct gb_connection	*connection;
-	struct kref		kref;
-	struct list_head	node;
+	struct device *parent;
+	struct gb_connection *connection;
+	struct kref kref;
+	struct list_head node;
 
 	/* Common id-map for interface and backend firmware requests */
-	struct ida		id_map;
-	struct mutex		mutex;
-	struct completion	completion;
-	struct cdev		cdev;
-	struct device		*class_device;
-	dev_t			dev_num;
-	unsigned int		timeout_jiffies;
-	bool			disabled; /* connection getting disabled */
+	struct ida id_map;
+	struct mutex mutex;
+	struct completion completion;
+	struct cdev cdev;
+	struct device *class_device;
+	dev_t dev_num;
+	unsigned int timeout_jiffies;
+	bool disabled; /* connection getting disabled */
 
 	/* Interface Firmware specific fields */
-	bool			mode_switch_started;
-	bool			intf_fw_loaded;
-	u8			intf_fw_request_id;
-	u8			intf_fw_status;
-	u16			intf_fw_major;
-	u16			intf_fw_minor;
+	bool mode_switch_started;
+	bool intf_fw_loaded;
+	u8 intf_fw_request_id;
+	u8 intf_fw_status;
+	u16 intf_fw_major;
+	u16 intf_fw_minor;
 
 	/* Backend Firmware specific fields */
-	u8			backend_fw_request_id;
-	u8			backend_fw_status;
+	u8 backend_fw_request_id;
+	u8 backend_fw_status;
 };
 
 /*
  * Number of minor devices this driver supports.
  * There will be exactly one required per Interface.
  */
-#define NUM_MINORS		U8_MAX
+#define NUM_MINORS U8_MAX
 
 static const struct class fw_mgmt_class = {
 	.name = "gb_fw_mgmt",
@@ -104,8 +104,8 @@ unlock:
 	return fw_mgmt;
 }
 
-static int fw_mgmt_interface_fw_version_operation(struct fw_mgmt *fw_mgmt,
-						  struct fw_mgmt_ioc_get_intf_version *fw_info)
+static int fw_mgmt_interface_fw_version_operation(
+	struct fw_mgmt *fw_mgmt, struct fw_mgmt_ioc_get_intf_version *fw_info)
 {
 	struct gb_connection *connection = fw_mgmt->connection;
 	struct gb_fw_mgmt_interface_fw_version_response response;
@@ -140,8 +140,8 @@ static int fw_mgmt_load_and_validate_operation(struct fw_mgmt *fw_mgmt,
 
 	if (load_method != GB_FW_LOAD_METHOD_UNIPRO &&
 	    load_method != GB_FW_LOAD_METHOD_INTERNAL) {
-		dev_err(fw_mgmt->parent,
-			"invalid load-method (%d)\n", load_method);
+		dev_err(fw_mgmt->parent, "invalid load-method (%d)\n",
+			load_method);
 		return -EINVAL;
 	}
 
@@ -196,7 +196,8 @@ static int fw_mgmt_interface_fw_loaded_operation(struct gb_operation *op)
 	}
 
 	if (op->request->payload_size != sizeof(*request)) {
-		dev_err(fw_mgmt->parent, "illegal size of firmware loaded request (%zu != %zu)\n",
+		dev_err(fw_mgmt->parent,
+			"illegal size of firmware loaded request (%zu != %zu)\n",
 			op->request->payload_size, sizeof(*request));
 		return -EINVAL;
 	}
@@ -205,7 +206,8 @@ static int fw_mgmt_interface_fw_loaded_operation(struct gb_operation *op)
 
 	/* Invalid request-id ? */
 	if (request->request_id != fw_mgmt->intf_fw_request_id) {
-		dev_err(fw_mgmt->parent, "invalid request id for firmware loaded request (%02u != %02u)\n",
+		dev_err(fw_mgmt->parent,
+			"invalid request id for firmware loaded request (%02u != %02u)\n",
 			fw_mgmt->intf_fw_request_id, request->request_id);
 		return -ENODEV;
 	}
@@ -232,8 +234,9 @@ static int fw_mgmt_interface_fw_loaded_operation(struct gb_operation *op)
 	return 0;
 }
 
-static int fw_mgmt_backend_fw_version_operation(struct fw_mgmt *fw_mgmt,
-						struct fw_mgmt_ioc_get_backend_version *fw_info)
+static int fw_mgmt_backend_fw_version_operation(
+	struct fw_mgmt *fw_mgmt,
+	struct fw_mgmt_ioc_get_backend_version *fw_info)
 {
 	struct gb_connection *connection = fw_mgmt->connection;
 	struct gb_fw_mgmt_backend_fw_version_request request;
@@ -248,11 +251,12 @@ static int fw_mgmt_backend_fw_version_operation(struct fw_mgmt *fw_mgmt,
 		return -EINVAL;
 	}
 
-	ret = gb_operation_sync(connection,
-				GB_FW_MGMT_TYPE_BACKEND_FW_VERSION, &request,
-				sizeof(request), &response, sizeof(response));
+	ret = gb_operation_sync(connection, GB_FW_MGMT_TYPE_BACKEND_FW_VERSION,
+				&request, sizeof(request), &response,
+				sizeof(response));
 	if (ret) {
-		dev_err(fw_mgmt->parent, "failed to get version of %s backend firmware (%d)\n",
+		dev_err(fw_mgmt->parent,
+			"failed to get version of %s backend firmware (%d)\n",
 			fw_info->firmware_tag, ret);
 		return ret;
 	}
@@ -332,12 +336,14 @@ static int fw_mgmt_backend_fw_updated_operation(struct gb_operation *op)
 
 	/* No pending load and validate request ? */
 	if (!fw_mgmt->backend_fw_request_id) {
-		dev_err(fw_mgmt->parent, "unexpected backend firmware updated request received\n");
+		dev_err(fw_mgmt->parent,
+			"unexpected backend firmware updated request received\n");
 		return -ENODEV;
 	}
 
 	if (op->request->payload_size != sizeof(*request)) {
-		dev_err(fw_mgmt->parent, "illegal size of backend firmware updated request (%zu != %zu)\n",
+		dev_err(fw_mgmt->parent,
+			"illegal size of backend firmware updated request (%zu != %zu)\n",
 			op->request->payload_size, sizeof(*request));
 		return -EINVAL;
 	}
@@ -346,7 +352,8 @@ static int fw_mgmt_backend_fw_updated_operation(struct gb_operation *op)
 
 	/* Invalid request-id ? */
 	if (request->request_id != fw_mgmt->backend_fw_request_id) {
-		dev_err(fw_mgmt->parent, "invalid request id for backend firmware updated request (%02u != %02u)\n",
+		dev_err(fw_mgmt->parent,
+			"invalid request id for backend firmware updated request (%02u != %02u)\n",
 			fw_mgmt->backend_fw_request_id, request->request_id);
 		return -ENODEV;
 	}
@@ -433,14 +440,15 @@ static int fw_mgmt_ioctl(struct fw_mgmt *fw_mgmt, unsigned int cmd,
 		if (copy_from_user(&intf_load, buf, sizeof(intf_load)))
 			return -EFAULT;
 
-		ret = fw_mgmt_load_and_validate_operation(fw_mgmt,
-				intf_load.load_method, intf_load.firmware_tag);
+		ret = fw_mgmt_load_and_validate_operation(
+			fw_mgmt, intf_load.load_method, intf_load.firmware_tag);
 		if (ret)
 			return ret;
 
 		if (!wait_for_completion_timeout(&fw_mgmt->completion,
 						 fw_mgmt->timeout_jiffies)) {
-			dev_err(fw_mgmt->parent, "timed out waiting for firmware load and validation to finish\n");
+			dev_err(fw_mgmt->parent,
+				"timed out waiting for firmware load and validation to finish\n");
 			return -ETIMEDOUT;
 		}
 
@@ -457,14 +465,15 @@ static int fw_mgmt_ioctl(struct fw_mgmt *fw_mgmt, unsigned int cmd,
 				   sizeof(backend_update)))
 			return -EFAULT;
 
-		ret = fw_mgmt_backend_fw_update_operation(fw_mgmt,
-							  backend_update.firmware_tag);
+		ret = fw_mgmt_backend_fw_update_operation(
+			fw_mgmt, backend_update.firmware_tag);
 		if (ret)
 			return ret;
 
 		if (!wait_for_completion_timeout(&fw_mgmt->completion,
 						 fw_mgmt->timeout_jiffies)) {
-			dev_err(fw_mgmt->parent, "timed out waiting for backend firmware update to finish\n");
+			dev_err(fw_mgmt->parent,
+				"timed out waiting for backend firmware update to finish\n");
 			return -ETIMEDOUT;
 		}
 
@@ -500,7 +509,8 @@ static int fw_mgmt_ioctl(struct fw_mgmt *fw_mgmt, unsigned int cmd,
 		 */
 		fw_mgmt->mode_switch_started = true;
 
-		ret = gb_interface_request_mode_switch(fw_mgmt->connection->intf);
+		ret = gb_interface_request_mode_switch(
+			fw_mgmt->connection->intf);
 		if (ret) {
 			dev_err(fw_mgmt->parent, "Mode-switch failed: %d\n",
 				ret);
@@ -547,10 +557,10 @@ static long fw_mgmt_ioctl_unlocked(struct file *file, unsigned int cmd,
 }
 
 static const struct file_operations fw_mgmt_fops = {
-	.owner		= THIS_MODULE,
-	.open		= fw_mgmt_open,
-	.release	= fw_mgmt_release,
-	.unlocked_ioctl	= fw_mgmt_ioctl_unlocked,
+	.owner = THIS_MODULE,
+	.open = fw_mgmt_open,
+	.release = fw_mgmt_release,
+	.unlocked_ioctl = fw_mgmt_ioctl_unlocked,
 };
 
 int gb_fw_mgmt_request_handler(struct gb_operation *op)

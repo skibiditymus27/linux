@@ -14,31 +14,31 @@
 #include "firmware.h"
 
 /* Estimated minimum buffer size, actual size can be smaller than this */
-#define MIN_FETCH_SIZE		512
+#define MIN_FETCH_SIZE 512
 /* Timeout, in jiffies, within which fetch or release firmware must be called */
-#define NEXT_REQ_TIMEOUT_J	msecs_to_jiffies(1000)
+#define NEXT_REQ_TIMEOUT_J msecs_to_jiffies(1000)
 
 struct fw_request {
-	u8			firmware_id;
-	bool			disabled;
-	bool			timedout;
-	char			name[FW_NAME_SIZE];
-	const struct firmware	*fw;
-	struct list_head	node;
+	u8 firmware_id;
+	bool disabled;
+	bool timedout;
+	char name[FW_NAME_SIZE];
+	const struct firmware *fw;
+	struct list_head node;
 
-	struct delayed_work	dwork;
+	struct delayed_work dwork;
 	/* Timeout, in jiffies, within which the firmware shall download */
-	unsigned long		release_timeout_j;
-	struct kref		kref;
-	struct fw_download	*fw_download;
+	unsigned long release_timeout_j;
+	struct kref kref;
+	struct fw_download *fw_download;
 };
 
 struct fw_download {
-	struct device		*parent;
-	struct gb_connection	*connection;
-	struct list_head	fw_requests;
-	struct ida		id_map;
-	struct mutex		mutex;
+	struct device *parent;
+	struct gb_connection *connection;
+	struct list_head fw_requests;
+	struct ida id_map;
+	struct mutex mutex;
 };
 
 static void fw_req_release(struct kref *kref)
@@ -128,8 +128,8 @@ static void free_firmware(struct fw_download *fw_download,
 static void fw_request_timedout(struct work_struct *work)
 {
 	struct delayed_work *dwork = to_delayed_work(work);
-	struct fw_request *fw_req = container_of(dwork,
-						 struct fw_request, dwork);
+	struct fw_request *fw_req =
+		container_of(dwork, struct fw_request, dwork);
 	struct fw_download *fw_download = fw_req->fw_download;
 
 	dev_err(fw_download->parent,
@@ -259,8 +259,8 @@ static int fw_download_find_firmware(struct gb_operation *op)
 	response->firmware_id = fw_req->firmware_id;
 	response->size = cpu_to_le32(fw_req->fw->size);
 
-	dev_dbg(fw_download->parent,
-		"firmware size is %zu bytes\n", fw_req->fw->size);
+	dev_dbg(fw_download->parent, "firmware size is %zu bytes\n",
+		fw_req->fw->size);
 
 	return 0;
 }

@@ -1,0 +1,334 @@
+-------------------------------
+drivers/staging/greybus/light.c
+-------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: struct mutex definition without comment
+#40: FILE: drivers/staging/greybus/light.c:40:
++	struct mutex lock;
+
+CHECK: struct mutex definition without comment
+#62: FILE: drivers/staging/greybus/light.c:62:
++	struct mutex lights_lock;
+
+ERROR: code indent should use tabs where possible
+#175: FILE: drivers/staging/greybus/light.c:175:
++                                                                              \$
+
+WARNING: please, no spaces at the start of a line
+#175: FILE: drivers/staging/greybus/light.c:175:
++                                                                              \$
+
+ERROR: code indent should use tabs where possible
+#178: FILE: drivers/staging/greybus/light.c:178:
++                                                                              \$
+
+WARNING: please, no spaces at the start of a line
+#178: FILE: drivers/staging/greybus/light.c:178:
++                                                                              \$
+
+ERROR: code indent should use tabs where possible
+#187: FILE: drivers/staging/greybus/light.c:187:
++                                                                              \$
+
+WARNING: please, no spaces at the start of a line
+#187: FILE: drivers/staging/greybus/light.c:187:
++                                                                              \$
+
+ERROR: code indent should use tabs where possible
+#193: FILE: drivers/staging/greybus/light.c:193:
++                                                                              \$
+
+WARNING: please, no spaces at the start of a line
+#193: FILE: drivers/staging/greybus/light.c:193:
++                                                                              \$
+
+ERROR: code indent should use tabs where possible
+#202: FILE: drivers/staging/greybus/light.c:202:
++                                                                              \$
+
+WARNING: please, no spaces at the start of a line
+#202: FILE: drivers/staging/greybus/light.c:202:
++                                                                              \$
+
+ERROR: code indent should use tabs where possible
+#206: FILE: drivers/staging/greybus/light.c:206:
++                                                                              \$
+
+WARNING: please, no spaces at the start of a line
+#206: FILE: drivers/staging/greybus/light.c:206:
++                                                                              \$
+
+total: 6 errors, 6 warnings, 2 checks, 1344 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+NOTE: Whitespace errors detected.
+      You may wish to use scripts/cleanpatch or scripts/cleanfile
+
+drivers/staging/greybus/light.c has style problems, please review.
+----------------------------------
+drivers/staging/greybus/loopback.c
+----------------------------------
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+CHECK: struct mutex definition without comment
+#64: FILE: drivers/staging/greybus/loopback.c:64:
++	struct mutex mutex;
+
+CHECK: Macro argument reuse 'field' - possible side-effects?
+#122: FILE: drivers/staging/greybus/loopback.c:122:
++#define gb_loopback_ro_attr(field)                                            \
++	static ssize_t field##_show(struct device *dev,                       \
++				    struct device_attribute *attr, char *buf) \
++	{                                                                     \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		return sprintf(buf, "%u\n", gb->field);                       \
++	}                                                                     \
++	static DEVICE_ATTR_RO(field)
+
+CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+#122: FILE: drivers/staging/greybus/loopback.c:122:
++#define gb_loopback_ro_attr(field)                                            \
++	static ssize_t field##_show(struct device *dev,                       \
++				    struct device_attribute *attr, char *buf) \
++	{                                                                     \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		return sprintf(buf, "%u\n", gb->field);                       \
++	}                                                                     \
++	static DEVICE_ATTR_RO(field)
+
+CHECK: Macro argument 'name' may be better as '(name)' to avoid precedence issues
+#131: FILE: drivers/staging/greybus/loopback.c:131:
++#define gb_loopback_ro_stats_attr(name, field, type)                          \
++	static ssize_t name##_##field##_show(                                 \
++		struct device *dev, struct device_attribute *attr, char *buf) \
++	{                                                                     \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		/* Report 0 for min and max if no transfer succeeded */       \
++		if (!gb->requests_completed)                                  \
++			return sprintf(buf, "0\n");                           \
++		return sprintf(buf, "%" #type "\n", gb->name.field);          \
++	}                                                                     \
++	static DEVICE_ATTR_RO(name##_##field)
+
+CHECK: Macro argument 'name' may be better as '(name)' to avoid precedence issues
+#143: FILE: drivers/staging/greybus/loopback.c:143:
++#define gb_loopback_ro_avg_attr(name)                                         \
++	static ssize_t name##_avg_show(                                       \
++		struct device *dev, struct device_attribute *attr, char *buf) \
++	{                                                                     \
++		struct gb_loopback_stats *stats;                              \
++		struct gb_loopback *gb;                                       \
++		u64 avg, rem;                                                 \
++		u32 count;                                                    \
++		gb = dev_get_drvdata(dev);                                    \
++		stats = &gb->name;                                            \
++		count = stats->count ? stats->count : 1;                      \
++		avg = stats->sum + count / 2000000; /* round closest */       \
++		rem = do_div(avg, count);                                     \
++		rem *= 1000000;                                               \
++		do_div(rem, count);                                           \
++		return sprintf(buf, "%llu.%06u\n", avg, (u32)rem);            \
++	}                                                                     \
++	static DEVICE_ATTR_RO(name##_avg)
+
+WARNING: Non-declarative macros with multiple statements should be enclosed in a do - while loop
+#162: FILE: drivers/staging/greybus/loopback.c:162:
++#define gb_loopback_stats_attrs(field)            \
++	gb_loopback_ro_stats_attr(field, min, u); \
++	gb_loopback_ro_stats_attr(field, max, u); \
++	gb_loopback_ro_avg_attr(field)
+
+BUT SEE:
+
+   do {} while (0) advice is over-stated in a few situations:
+
+   The more obvious case is macros, like MODULE_PARM_DESC, invoked at
+   file-scope, where C disallows code (it must be in functions).  See
+   $exceptions if you have one to add by name.
+
+   More troublesome is declarative macros used at top of new scope,
+   like DECLARE_PER_CPU.  These might just compile with a do-while-0
+   wrapper, but would be incorrect.  Most of these are handled by
+   detecting struct,union,etc declaration primitives in $exceptions.
+
+   Theres also macros called inside an if (block), which "return" an
+   expression.  These cannot do-while, and need a ({}) wrapper.
+
+   Enjoy this qualification while we work to improve our heuristics.
+
+CHECK: Macro argument reuse 'field' - possible side-effects?
+#162: FILE: drivers/staging/greybus/loopback.c:162:
++#define gb_loopback_stats_attrs(field)            \
++	gb_loopback_ro_stats_attr(field, min, u); \
++	gb_loopback_ro_stats_attr(field, max, u); \
++	gb_loopback_ro_avg_attr(field)
+
+CHECK: Macro argument reuse 'field' - possible side-effects?
+#167: FILE: drivers/staging/greybus/loopback.c:167:
++#define gb_loopback_attr(field, type)                                         \
++	static ssize_t field##_show(struct device *dev,                       \
++				    struct device_attribute *attr, char *buf) \
++	{                                                                     \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		return sprintf(buf, "%" #type "\n", gb->field);               \
++	}                                                                     \
++	static ssize_t field##_store(struct device *dev,                      \
++				     struct device_attribute *attr,           \
++				     const char *buf, size_t len)             \
++	{                                                                     \
++		int ret;                                                      \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		mutex_lock(&gb->mutex);                                       \
++		ret = sscanf(buf, "%" #type, &gb->field);                     \
++		if (ret != 1)                                                 \
++			len = -EINVAL;                                        \
++		else                                                          \
++			gb_loopback_check_attr(gb, bundle);                   \
++		mutex_unlock(&gb->mutex);                                     \
++		return len;                                                   \
++	}                                                                     \
++	static DEVICE_ATTR_RW(field)
+
+CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+#167: FILE: drivers/staging/greybus/loopback.c:167:
++#define gb_loopback_attr(field, type)                                         \
++	static ssize_t field##_show(struct device *dev,                       \
++				    struct device_attribute *attr, char *buf) \
++	{                                                                     \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		return sprintf(buf, "%" #type "\n", gb->field);               \
++	}                                                                     \
++	static ssize_t field##_store(struct device *dev,                      \
++				     struct device_attribute *attr,           \
++				     const char *buf, size_t len)             \
++	{                                                                     \
++		int ret;                                                      \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		mutex_lock(&gb->mutex);                                       \
++		ret = sscanf(buf, "%" #type, &gb->field);                     \
++		if (ret != 1)                                                 \
++			len = -EINVAL;                                        \
++		else                                                          \
++			gb_loopback_check_attr(gb, bundle);                   \
++		mutex_unlock(&gb->mutex);                                     \
++		return len;                                                   \
++	}                                                                     \
++	static DEVICE_ATTR_RW(field)
+
+CHECK: Macro argument reuse 'field' - possible side-effects?
+#191: FILE: drivers/staging/greybus/loopback.c:191:
++#define gb_dev_loopback_ro_attr(field, conn)                                  \
++	static ssize_t field##_show(struct device *dev,                       \
++				    struct device_attribute *attr, char *buf) \
++	{                                                                     \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		return sprintf(buf, "%u\n", gb->field);                       \
++	}                                                                     \
++	static DEVICE_ATTR_RO(field)
+
+CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+#191: FILE: drivers/staging/greybus/loopback.c:191:
++#define gb_dev_loopback_ro_attr(field, conn)                                  \
++	static ssize_t field##_show(struct device *dev,                       \
++				    struct device_attribute *attr, char *buf) \
++	{                                                                     \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		return sprintf(buf, "%u\n", gb->field);                       \
++	}                                                                     \
++	static DEVICE_ATTR_RO(field)
+
+WARNING: Argument 'conn' is not used in function-like macro
+#191: FILE: drivers/staging/greybus/loopback.c:191:
++#define gb_dev_loopback_ro_attr(field, conn)                                  \
++	static ssize_t field##_show(struct device *dev,                       \
++				    struct device_attribute *attr, char *buf) \
++	{                                                                     \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		return sprintf(buf, "%u\n", gb->field);                       \
++	}                                                                     \
++	static DEVICE_ATTR_RO(field)
+
+CHECK: Macro argument reuse 'field' - possible side-effects?
+#200: FILE: drivers/staging/greybus/loopback.c:200:
++#define gb_dev_loopback_rw_attr(field, type)                                  \
++	static ssize_t field##_show(struct device *dev,                       \
++				    struct device_attribute *attr, char *buf) \
++	{                                                                     \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		return sprintf(buf, "%" #type "\n", gb->field);               \
++	}                                                                     \
++	static ssize_t field##_store(struct device *dev,                      \
++				     struct device_attribute *attr,           \
++				     const char *buf, size_t len)             \
++	{                                                                     \
++		int ret;                                                      \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		mutex_lock(&gb->mutex);                                       \
++		ret = sscanf(buf, "%" #type, &gb->field);                     \
++		if (ret != 1)                                                 \
++			len = -EINVAL;                                        \
++		else                                                          \
++			gb_loopback_check_attr(gb);                           \
++		mutex_unlock(&gb->mutex);                                     \
++		return len;                                                   \
++	}                                                                     \
++	static DEVICE_ATTR_RW(field)
+
+CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+#200: FILE: drivers/staging/greybus/loopback.c:200:
++#define gb_dev_loopback_rw_attr(field, type)                                  \
++	static ssize_t field##_show(struct device *dev,                       \
++				    struct device_attribute *attr, char *buf) \
++	{                                                                     \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		return sprintf(buf, "%" #type "\n", gb->field);               \
++	}                                                                     \
++	static ssize_t field##_store(struct device *dev,                      \
++				     struct device_attribute *attr,           \
++				     const char *buf, size_t len)             \
++	{                                                                     \
++		int ret;                                                      \
++		struct gb_loopback *gb = dev_get_drvdata(dev);                \
++		mutex_lock(&gb->mutex);                                       \
++		ret = sscanf(buf, "%" #type, &gb->field);                     \
++		if (ret != 1)                                                 \
++			len = -EINVAL;                                        \
++		else                                                          \
++			gb_loopback_check_attr(gb);                           \
++		mutex_unlock(&gb->mutex);                                     \
++		return len;                                                   \
++	}                                                                     \
++	static DEVICE_ATTR_RW(field)
+
+CHECK: Lines should not end with a '('
+#579: FILE: drivers/staging/greybus/loopback.c:579:
++static int gb_loopback_async_transfer_complete(
+
+CHECK: Lines should not end with a '('
+#622: FILE: drivers/staging/greybus/loopback.c:622:
++	retval = gb_loopback_async_operation(
+
+CHECK: Lines should not end with a '('
+#667: FILE: drivers/staging/greybus/loopback.c:667:
++		if (!gb_operation_response_alloc(
+
+CHECK: Lines should not end with a '('
+#836: FILE: drivers/staging/greybus/loopback.c:836:
++			wait_event_interruptible(
+
+total: 0 errors, 2 warnings, 16 checks, 1163 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+drivers/staging/greybus/loopback.c has style problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.

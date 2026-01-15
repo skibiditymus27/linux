@@ -41,16 +41,16 @@ static const struct file_operations raw_fops;
 static DEFINE_IDA(minors);
 
 /* Number of minor devices this driver supports */
-#define NUM_MINORS	256
+#define NUM_MINORS 256
 
 /* Maximum size of any one send data buffer we support */
-#define MAX_PACKET_SIZE	(PAGE_SIZE * 2)
+#define MAX_PACKET_SIZE (PAGE_SIZE * 2)
 
 /*
  * Maximum size of the data in the receive buffer we allow before we start to
  * drop messages on the floor
  */
-#define MAX_DATA_SIZE	(MAX_PACKET_SIZE * 8)
+#define MAX_DATA_SIZE (MAX_PACKET_SIZE * 8)
 
 /*
  * Add the raw data message to the list of received messages.
@@ -68,7 +68,8 @@ static int receive_data(struct gb_raw *raw, u32 len, u8 *data)
 
 	mutex_lock(&raw->list_lock);
 	if ((raw->list_data + len) > MAX_DATA_SIZE) {
-		dev_err(dev, "Too much data in receive buffer, now dropping packets\n");
+		dev_err(dev,
+			"Too much data in receive buffer, now dropping packets\n");
 		retval = -EINVAL;
 		goto exit;
 	}
@@ -140,9 +141,8 @@ static int gb_raw_send(struct gb_raw *raw, u32 len, const char __user *data)
 
 	request->len = cpu_to_le32(len);
 
-	retval = gb_operation_sync(connection, GB_RAW_TYPE_SEND,
-				   request, len + sizeof(*request),
-				   NULL, 0);
+	retval = gb_operation_sync(connection, GB_RAW_TYPE_SEND, request,
+				   len + sizeof(*request), NULL, 0);
 
 	kfree(request);
 	return retval;
@@ -318,24 +318,24 @@ exit:
 }
 
 static const struct file_operations raw_fops = {
-	.owner		= THIS_MODULE,
-	.write		= raw_write,
-	.read		= raw_read,
-	.open		= raw_open,
-	.llseek		= noop_llseek,
+	.owner = THIS_MODULE,
+	.write = raw_write,
+	.read = raw_read,
+	.open = raw_open,
+	.llseek = noop_llseek,
 };
 
 static const struct greybus_bundle_id gb_raw_id_table[] = {
 	{ GREYBUS_DEVICE_CLASS(GREYBUS_CLASS_RAW) },
-	{ }
+	{}
 };
 MODULE_DEVICE_TABLE(greybus, gb_raw_id_table);
 
 static struct greybus_driver gb_raw_driver = {
-	.name		= "raw",
-	.probe		= gb_raw_probe,
-	.disconnect	= gb_raw_disconnect,
-	.id_table	= gb_raw_id_table,
+	.name = "raw",
+	.probe = gb_raw_probe,
+	.disconnect = gb_raw_disconnect,
+	.id_table = gb_raw_id_table,
 };
 
 static int raw_init(void)

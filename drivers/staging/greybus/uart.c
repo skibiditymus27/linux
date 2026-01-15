@@ -32,13 +32,13 @@
 
 #include "gbphy.h"
 
-#define GB_NUM_MINORS	16	/* 16 is more than enough */
-#define GB_NAME		"ttyGB"
+#define GB_NUM_MINORS 16 /* 16 is more than enough */
+#define GB_NAME "ttyGB"
 
-#define GB_UART_WRITE_FIFO_SIZE		PAGE_SIZE
-#define GB_UART_WRITE_ROOM_MARGIN	1	/* leave some space in fifo */
-#define GB_UART_FIRMWARE_CREDITS	4096
-#define GB_UART_CREDIT_WAIT_TIMEOUT_MSEC	10000
+#define GB_UART_WRITE_FIFO_SIZE PAGE_SIZE
+#define GB_UART_WRITE_ROOM_MARGIN 1 /* leave some space in fifo */
+#define GB_UART_FIRMWARE_CREDITS 4096
+#define GB_UART_CREDIT_WAIT_TIMEOUT_MSEC 10000
 
 struct gb_tty {
 	struct gbphy_device *gbphy_dev;
@@ -56,8 +56,8 @@ struct gb_tty {
 	struct async_icount oldcount;
 	wait_queue_head_t wioctl;
 	struct mutex mutex;
-	u8 ctrlin;	/* input control lines */
-	u8 ctrlout;	/* output control lines */
+	u8 ctrlin; /* input control lines */
+	u8 ctrlout; /* output control lines */
 	struct gb_uart_set_line_coding_request line_coding;
 	struct work_struct tx_work;
 	struct kfifo write_fifo;
@@ -159,8 +159,7 @@ static int gb_uart_receive_credits_handler(struct gb_operation *op)
 	if (request->payload_size < sizeof(*credit_request)) {
 		dev_err(&gb_tty->gbphy_dev->dev,
 			"short receive_credits event received (%zu < %zu)\n",
-			request->payload_size,
-			sizeof(*credit_request));
+			request->payload_size, sizeof(*credit_request));
 		return -EINVAL;
 	}
 
@@ -222,7 +221,7 @@ static int gb_uart_request_handler(struct gb_operation *op)
 	return ret;
 }
 
-static void  gb_uart_tx_write_work(struct work_struct *work)
+static void gb_uart_tx_write_work(struct work_struct *work)
 {
 	struct gb_uart_send_data_request *request;
 	struct gb_tty *gb_tty;
@@ -243,8 +242,7 @@ static void  gb_uart_tx_write_work(struct work_struct *work)
 			send_size = gb_tty->credits;
 
 		send_size = kfifo_out_peek(&gb_tty->write_fifo,
-					   &request->data[0],
-					   send_size);
+					   &request->data[0], send_size);
 		if (!send_size) {
 			spin_unlock_irqrestore(&gb_tty->write_lock, flags);
 			break;
@@ -255,9 +253,8 @@ static void  gb_uart_tx_write_work(struct work_struct *work)
 
 		request->size = cpu_to_le16(send_size);
 		ret = gb_operation_sync(gb_tty->connection,
-					GB_UART_TYPE_SEND_DATA,
-					request, sizeof(*request) + send_size,
-					NULL, 0);
+					GB_UART_TYPE_SEND_DATA, request,
+					sizeof(*request) + send_size, NULL, 0);
 		if (ret) {
 			dev_err(&gb_tty->gbphy_dev->dev,
 				"send data error: %d\n", ret);
@@ -291,8 +288,8 @@ static int send_control(struct gb_tty *gb_tty, u8 control)
 
 	request.control = control;
 	return gb_operation_sync(gb_tty->connection,
-				 GB_UART_TYPE_SET_CONTROL_LINE_STATE,
-				 &request, sizeof(request), NULL, 0);
+				 GB_UART_TYPE_SET_CONTROL_LINE_STATE, &request,
+				 sizeof(request), NULL, 0);
 }
 
 static int send_break(struct gb_tty *gb_tty, u8 state)
@@ -300,8 +297,8 @@ static int send_break(struct gb_tty *gb_tty, u8 state)
 	struct gb_uart_set_break_request request;
 
 	if ((state != 0) && (state != 1)) {
-		dev_err(&gb_tty->gbphy_dev->dev,
-			"invalid break state of %d\n", state);
+		dev_err(&gb_tty->gbphy_dev->dev, "invalid break state of %d\n",
+			state);
 		return -EINVAL;
 	}
 
@@ -317,8 +314,9 @@ static int gb_uart_wait_for_all_credits(struct gb_tty *gb_tty)
 	if (gb_tty->credits == GB_UART_FIRMWARE_CREDITS)
 		return 0;
 
-	ret = wait_for_completion_timeout(&gb_tty->credits_complete,
-			msecs_to_jiffies(GB_UART_CREDIT_WAIT_TIMEOUT_MSEC));
+	ret = wait_for_completion_timeout(
+		&gb_tty->credits_complete,
+		s_to_jiffies(GB_UART_CREDIT_WAIT_TIMEOUT_MSEC));
 	if (!ret) {
 		dev_err(&gb_tty->gbphy_dev->dev,
 			"time out waiting for credits\n");
@@ -373,7 +371,7 @@ static void release_minor(struct gb_tty *gb_tty)
 {
 	int minor = gb_tty->minor;
 
-	gb_tty->minor = 0;	/* Maybe should use an invalid value instead */
+	gb_tty->minor = 0; /* Maybe should use an invalid value instead */
 	mutex_lock(&table_lock);
 	idr_remove(&tty_minors, minor);
 	mutex_unlock(&table_lock);
@@ -431,8 +429,8 @@ static ssize_t gb_tty_write(struct tty_struct *tty, const u8 *buf, size_t count)
 {
 	struct gb_tty *gb_tty = tty->driver_data;
 
-	count =  kfifo_in_spinlocked(&gb_tty->write_fifo, buf, count,
-				     &gb_tty->write_lock);
+	count = kfifo_in_spinlocked(&gb_tty->write_fifo, buf, count,
+				    &gb_tty->write_lock);
 	if (count && !gb_tty->close_pending)
 		schedule_work(&gb_tty->tx_work);
 
@@ -487,11 +485,12 @@ static void gb_tty_set_termios(struct tty_struct *tty,
 	u8 newctrl = gb_tty->ctrlout;
 
 	newline.rate = cpu_to_le32(tty_get_baud_rate(tty));
-	newline.format = termios->c_cflag & CSTOPB ?
-				GB_SERIAL_2_STOP_BITS : GB_SERIAL_1_STOP_BITS;
+	newline.format = termios->c_cflag & CSTOPB ? GB_SERIAL_2_STOP_BITS :
+						     GB_SERIAL_1_STOP_BITS;
 	newline.parity = termios->c_cflag & PARENB ?
-				(termios->c_cflag & PARODD ? 1 : 2) +
-				(termios->c_cflag & CMSPAR ? 2 : 0) : 0;
+				 (termios->c_cflag & PARODD ? 1 : 2) +
+					 (termios->c_cflag & CMSPAR ? 2 : 0) :
+				 0;
 
 	newline.data_bits = tty_get_char_size(termios->c_cflag);
 
@@ -527,10 +526,9 @@ static int gb_tty_tiocmget(struct tty_struct *tty)
 
 	return (gb_tty->ctrlout & GB_UART_CTRL_DTR ? TIOCM_DTR : 0) |
 	       (gb_tty->ctrlout & GB_UART_CTRL_RTS ? TIOCM_RTS : 0) |
-	       (gb_tty->ctrlin  & GB_UART_CTRL_DSR ? TIOCM_DSR : 0) |
-	       (gb_tty->ctrlin  & GB_UART_CTRL_RI  ? TIOCM_RI  : 0) |
-	       (gb_tty->ctrlin  & GB_UART_CTRL_DCD ? TIOCM_CD  : 0) |
-	       TIOCM_CTS;
+	       (gb_tty->ctrlin & GB_UART_CTRL_DSR ? TIOCM_DSR : 0) |
+	       (gb_tty->ctrlin & GB_UART_CTRL_RI ? TIOCM_RI : 0) |
+	       (gb_tty->ctrlin & GB_UART_CTRL_DCD ? TIOCM_CD : 0) | TIOCM_CTS;
 }
 
 static int gb_tty_tiocmset(struct tty_struct *tty, unsigned int set,
@@ -590,8 +588,7 @@ static void gb_tty_unthrottle(struct tty_struct *tty)
 	}
 }
 
-static int get_serial_info(struct tty_struct *tty,
-			   struct serial_struct *ss)
+static int get_serial_info(struct tty_struct *tty, struct serial_struct *ss)
 {
 	struct gb_tty *gb_tty = tty->driver_data;
 
@@ -600,15 +597,14 @@ static int get_serial_info(struct tty_struct *tty,
 	ss->close_delay = jiffies_to_msecs(gb_tty->port.close_delay) / 10;
 	ss->closing_wait =
 		gb_tty->port.closing_wait == ASYNC_CLOSING_WAIT_NONE ?
-		ASYNC_CLOSING_WAIT_NONE :
-		jiffies_to_msecs(gb_tty->port.closing_wait) / 10;
+			ASYNC_CLOSING_WAIT_NONE :
+			jiffies_to_msecs(gb_tty->port.closing_wait) / 10;
 	mutex_unlock(&gb_tty->port.mutex);
 
 	return 0;
 }
 
-static int set_serial_info(struct tty_struct *tty,
-			   struct serial_struct *ss)
+static int set_serial_info(struct tty_struct *tty, struct serial_struct *ss)
 {
 	struct gb_tty *gb_tty = tty->driver_data;
 	unsigned int closing_wait;
@@ -617,8 +613,8 @@ static int set_serial_info(struct tty_struct *tty,
 
 	close_delay = msecs_to_jiffies(ss->close_delay * 10);
 	closing_wait = ss->closing_wait == ASYNC_CLOSING_WAIT_NONE ?
-			ASYNC_CLOSING_WAIT_NONE :
-			msecs_to_jiffies(ss->closing_wait * 10);
+			       ASYNC_CLOSING_WAIT_NONE :
+			       msecs_to_jiffies(ss->closing_wait * 10);
 
 	mutex_lock(&gb_tty->port.mutex);
 	if (!capable(CAP_SYS_ADMIN)) {
@@ -719,8 +715,7 @@ static void gb_tty_dtr_rts(struct tty_port *port, bool active)
 	send_control(gb_tty, newctrl);
 }
 
-static int gb_tty_port_activate(struct tty_port *port,
-				struct tty_struct *tty)
+static int gb_tty_port_activate(struct tty_port *port, struct tty_struct *tty)
 {
 	struct gb_tty *gb_tty;
 
@@ -774,31 +769,31 @@ static void gb_tty_port_destruct(struct tty_port *port)
 }
 
 static const struct tty_operations gb_ops = {
-	.install =		gb_tty_install,
-	.open =			gb_tty_open,
-	.close =		gb_tty_close,
-	.cleanup =		gb_tty_cleanup,
-	.hangup =		gb_tty_hangup,
-	.write =		gb_tty_write,
-	.write_room =		gb_tty_write_room,
-	.ioctl =		gb_tty_ioctl,
-	.throttle =		gb_tty_throttle,
-	.unthrottle =		gb_tty_unthrottle,
-	.chars_in_buffer =	gb_tty_chars_in_buffer,
-	.break_ctl =		gb_tty_break_ctl,
-	.set_termios =		gb_tty_set_termios,
-	.tiocmget =		gb_tty_tiocmget,
-	.tiocmset =		gb_tty_tiocmset,
-	.get_icount =		gb_tty_get_icount,
-	.set_serial =		set_serial_info,
-	.get_serial =		get_serial_info,
+	.install = gb_tty_install,
+	.open = gb_tty_open,
+	.close = gb_tty_close,
+	.cleanup = gb_tty_cleanup,
+	.hangup = gb_tty_hangup,
+	.write = gb_tty_write,
+	.write_room = gb_tty_write_room,
+	.ioctl = gb_tty_ioctl,
+	.throttle = gb_tty_throttle,
+	.unthrottle = gb_tty_unthrottle,
+	.chars_in_buffer = gb_tty_chars_in_buffer,
+	.break_ctl = gb_tty_break_ctl,
+	.set_termios = gb_tty_set_termios,
+	.tiocmget = gb_tty_tiocmget,
+	.tiocmset = gb_tty_tiocmset,
+	.get_icount = gb_tty_get_icount,
+	.set_serial = set_serial_info,
+	.get_serial = get_serial_info,
 };
 
 static const struct tty_port_operations gb_port_ops = {
-	.dtr_rts =		gb_tty_dtr_rts,
-	.activate =		gb_tty_port_activate,
-	.shutdown =		gb_tty_port_shutdown,
-	.destruct =		gb_tty_port_destruct,
+	.dtr_rts = gb_tty_dtr_rts,
+	.activate = gb_tty_port_activate,
+	.shutdown = gb_tty_port_shutdown,
+	.destruct = gb_tty_port_destruct,
 };
 
 static int gb_uart_probe(struct gbphy_device *gbphy_dev,
@@ -811,9 +806,9 @@ static int gb_uart_probe(struct gbphy_device *gbphy_dev,
 	int retval;
 	int minor;
 
-	connection = gb_connection_create(gbphy_dev->bundle,
-					  le16_to_cpu(gbphy_dev->cport_desc->id),
-					  gb_uart_request_handler);
+	connection = gb_connection_create(
+		gbphy_dev->bundle, le16_to_cpu(gbphy_dev->cport_desc->id),
+		gb_uart_request_handler);
 	if (IS_ERR(connection))
 		return PTR_ERR(connection);
 
@@ -833,8 +828,8 @@ static int gb_uart_probe(struct gbphy_device *gbphy_dev,
 	gb_tty->port.ops = &gb_port_ops;
 	gb_tty->minor = GB_NUM_MINORS;
 
-	gb_tty->buffer_payload_max = max_payload -
-			sizeof(struct gb_uart_send_data_request);
+	gb_tty->buffer_payload_max =
+		max_payload - sizeof(struct gb_uart_send_data_request);
 
 	gb_tty->buffer = kzalloc(gb_tty->buffer_payload_max, GFP_KERNEL);
 	if (!gb_tty->buffer) {
@@ -947,8 +942,8 @@ static int gb_tty_init(void)
 {
 	int retval = 0;
 
-	gb_tty_driver = tty_alloc_driver(GB_NUM_MINORS, TTY_DRIVER_REAL_RAW |
-					 TTY_DRIVER_DYNAMIC_DEV);
+	gb_tty_driver = tty_alloc_driver(
+		GB_NUM_MINORS, TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV);
 	if (IS_ERR(gb_tty_driver)) {
 		pr_err("Can not allocate tty driver\n");
 		retval = -ENOMEM;
@@ -962,8 +957,8 @@ static int gb_tty_init(void)
 	gb_tty_driver->type = TTY_DRIVER_TYPE_SERIAL;
 	gb_tty_driver->subtype = SERIAL_TYPE_NORMAL;
 	gb_tty_driver->init_termios = tty_std_termios;
-	gb_tty_driver->init_termios.c_cflag = B9600 | CS8 |
-		CREAD | HUPCL | CLOCAL;
+	gb_tty_driver->init_termios.c_cflag = B9600 | CS8 | CREAD | HUPCL |
+					      CLOCAL;
 	tty_set_operations(gb_tty_driver, &gb_ops);
 
 	retval = tty_register_driver(gb_tty_driver);
@@ -989,15 +984,15 @@ static void gb_tty_exit(void)
 
 static const struct gbphy_device_id gb_uart_id_table[] = {
 	{ GBPHY_PROTOCOL(GREYBUS_PROTOCOL_UART) },
-	{ },
+	{},
 };
 MODULE_DEVICE_TABLE(gbphy, gb_uart_id_table);
 
 static struct gbphy_driver uart_driver = {
-	.name		= "uart",
-	.probe		= gb_uart_probe,
-	.remove		= gb_uart_remove,
-	.id_table	= gb_uart_id_table,
+	.name = "uart",
+	.probe = gb_uart_probe,
+	.remove = gb_uart_remove,
+	.id_table = gb_uart_id_table,
 };
 
 static int gb_uart_driver_init(void)

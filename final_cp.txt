@@ -1,0 +1,281 @@
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/arche-apb-ctrl.c:466: WARNING: DT compatible string "usbffff,2" appears un-documented -- check ./Documentation/devicetree/bindings/
+drivers/staging/greybus/arche-apb-ctrl.c:466: WARNING: DT compatible string vendor "usbffff" appears un-documented -- check ./Documentation/devicetree/bindings/vendor-prefixes.yaml
+total: 0 errors, 2 warnings, 0 checks, 490 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/arche-platform.c:183: CHECK: line length of 101 exceeds 100 columns
+drivers/staging/greybus/arche-platform.c:619: WARNING: DT compatible string "google,arche-platform" appears un-documented -- check ./Documentation/devicetree/bindings/
+total: 0 errors, 1 warnings, 1 checks, 660 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/audio_codec.c:1081: WARNING: DT compatible string "toshiba,apb-dummy-codec" appears un-documented -- check ./Documentation/devicetree/bindings/
+total: 0 errors, 1 warnings, 0 checks, 1100 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/audio_codec.h:73: CHECK: struct mutex definition without comment
+drivers/staging/greybus/audio_codec.h:74: CHECK: struct mutex definition without comment
+total: 0 errors, 0 warnings, 2 checks, 243 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/audio_helper.c:11: CHECK: Macro argument reuse 'dir' - possible side-effects?
+total: 0 errors, 0 warnings, 1 checks, 180 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/audio_manager_module.c:162: WARNING: char * array declaration might be better as static const
+total: 0 errors, 1 warnings, 0 checks, 241 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/authentication.c:33: CHECK: struct mutex definition without comment
+drivers/staging/greybus/authentication.c:115: CHECK: Lines should not end with a '('
+drivers/staging/greybus/authentication.c:244: CHECK: Lines should not end with a '('
+total: 0 errors, 0 warnings, 3 checks, 424 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/camera.c:56: CHECK: struct mutex definition without comment
+drivers/staging/greybus/camera.c:268: CHECK: Lines should not end with a '('
+drivers/staging/greybus/camera.c:311: CHECK: Lines should not end with a '('
+drivers/staging/greybus/camera.c:318: CHECK: Lines should not end with a '('
+drivers/staging/greybus/camera.c:373: CHECK: Lines should not end with a '('
+drivers/staging/greybus/camera.c:1160: CHECK: Lines should not end with a '('
+drivers/staging/greybus/camera.c:1357: CHECK: Lines should not end with a '('
+total: 0 errors, 0 warnings, 7 checks, 1371 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/fw-download.c:41: CHECK: struct mutex definition without comment
+total: 0 errors, 0 warnings, 1 checks, 465 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/fw-management.c:31: CHECK: struct mutex definition without comment
+drivers/staging/greybus/fw-management.c:107: CHECK: Lines should not end with a '('
+drivers/staging/greybus/fw-management.c:237: CHECK: Lines should not end with a '('
+drivers/staging/greybus/fw-management.c:443: CHECK: Lines should not end with a '('
+drivers/staging/greybus/fw-management.c:468: CHECK: Lines should not end with a '('
+drivers/staging/greybus/fw-management.c:512: CHECK: Lines should not end with a '('
+total: 0 errors, 0 warnings, 6 checks, 715 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/gb-camera.h:13: CHECK: Prefer using the BIT macro
+drivers/staging/greybus/gb-camera.h:15: CHECK: Prefer using the BIT macro
+drivers/staging/greybus/gb-camera.h:92: CHECK: Alignment should match open parenthesis
+drivers/staging/greybus/gb-camera.h:119: CHECK: Macro argument reuse 'f' - possible side-effects?
+drivers/staging/greybus/gb-camera.h:119: CHECK: Macro argument reuse 'op' - possible side-effects?
+drivers/staging/greybus/gb-camera.h:119: CHECK: Macro argument 'op' may be better as '(op)' to avoid precedence issues
+total: 0 errors, 0 warnings, 6 checks, 126 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/gbphy.h:18: CHECK: Please use a blank line after function/struct/union/enum declarations
+drivers/staging/greybus/gbphy.h:46: CHECK: Please use a blank line after function/struct/union/enum declarations
+total: 0 errors, 0 warnings, 2 checks, 109 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/greybus_firmware.h:67: CHECK: line length of 112 exceeds 100 columns
+drivers/staging/greybus/greybus_firmware.h:68: CHECK: line length of 116 exceeds 100 columns
+drivers/staging/greybus/greybus_firmware.h:69: CHECK: line length of 119 exceeds 100 columns
+drivers/staging/greybus/greybus_firmware.h:70: CHECK: line length of 114 exceeds 100 columns
+total: 0 errors, 0 warnings, 4 checks, 75 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/light.c:40: CHECK: struct mutex definition without comment
+drivers/staging/greybus/light.c:62: CHECK: struct mutex definition without comment
+drivers/staging/greybus/light.c:175: ERROR: code indent should use tabs where possible
+drivers/staging/greybus/light.c:175: WARNING: please, no spaces at the start of a line
+drivers/staging/greybus/light.c:178: ERROR: code indent should use tabs where possible
+drivers/staging/greybus/light.c:178: WARNING: please, no spaces at the start of a line
+drivers/staging/greybus/light.c:187: ERROR: code indent should use tabs where possible
+drivers/staging/greybus/light.c:187: WARNING: please, no spaces at the start of a line
+drivers/staging/greybus/light.c:193: ERROR: code indent should use tabs where possible
+drivers/staging/greybus/light.c:193: WARNING: please, no spaces at the start of a line
+drivers/staging/greybus/light.c:202: ERROR: code indent should use tabs where possible
+drivers/staging/greybus/light.c:202: WARNING: please, no spaces at the start of a line
+drivers/staging/greybus/light.c:206: ERROR: code indent should use tabs where possible
+drivers/staging/greybus/light.c:206: WARNING: please, no spaces at the start of a line
+total: 6 errors, 6 warnings, 2 checks, 1344 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/loopback.c:64: CHECK: struct mutex definition without comment
+drivers/staging/greybus/loopback.c:122: CHECK: Macro argument reuse 'field' - possible side-effects?
+drivers/staging/greybus/loopback.c:122: CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+drivers/staging/greybus/loopback.c:131: CHECK: Macro argument 'name' may be better as '(name)' to avoid precedence issues
+drivers/staging/greybus/loopback.c:143: CHECK: Macro argument 'name' may be better as '(name)' to avoid precedence issues
+drivers/staging/greybus/loopback.c:162: WARNING: Non-declarative macros with multiple statements should be enclosed in a do - while loop
+drivers/staging/greybus/loopback.c:162: CHECK: Macro argument reuse 'field' - possible side-effects?
+drivers/staging/greybus/loopback.c:167: CHECK: Macro argument reuse 'field' - possible side-effects?
+drivers/staging/greybus/loopback.c:167: CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+drivers/staging/greybus/loopback.c:191: CHECK: Macro argument reuse 'field' - possible side-effects?
+drivers/staging/greybus/loopback.c:191: CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+drivers/staging/greybus/loopback.c:191: WARNING: Argument 'conn' is not used in function-like macro
+drivers/staging/greybus/loopback.c:200: CHECK: Macro argument reuse 'field' - possible side-effects?
+drivers/staging/greybus/loopback.c:200: CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+drivers/staging/greybus/loopback.c:579: CHECK: Lines should not end with a '('
+drivers/staging/greybus/loopback.c:622: CHECK: Lines should not end with a '('
+drivers/staging/greybus/loopback.c:667: CHECK: Lines should not end with a '('
+drivers/staging/greybus/loopback.c:836: CHECK: Lines should not end with a '('
+total: 0 errors, 2 warnings, 16 checks, 1163 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/power_supply.c:46: CHECK: struct mutex definition without comment
+drivers/staging/greybus/power_supply.c:53: CHECK: struct mutex definition without comment
+drivers/staging/greybus/power_supply.c:545: CHECK: Lines should not end with a '('
+total: 0 errors, 0 warnings, 3 checks, 1141 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/raw.c:23: CHECK: struct mutex definition without comment
+total: 0 errors, 0 warnings, 1 checks, 381 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/spilib.c:337: CHECK: Lines should not end with a '('
+total: 0 errors, 0 warnings, 1 checks, 571 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+drivers/staging/greybus/uart.c:53: CHECK: spinlock_t definition without comment
+drivers/staging/greybus/uart.c:54: CHECK: spinlock_t definition without comment
+drivers/staging/greybus/uart.c:58: CHECK: struct mutex definition without comment
+drivers/staging/greybus/uart.c:70: WARNING: Deprecated use of 'DEFINE_IDR', prefer 'DEFINE_XARRAY' instead
+drivers/staging/greybus/uart.c:317: CHECK: Lines should not end with a '('
+drivers/staging/greybus/uart.c:809: CHECK: Lines should not end with a '('
+drivers/staging/greybus/uart.c:945: CHECK: Lines should not end with a '('
+total: 0 errors, 1 warnings, 6 checks, 1024 lines checked
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'
+Traceback (most recent call last):
+  File "/home/skibiditymus27/Desktop/linux/scripts/spdxcheck.py", line 11, in <module>
+    import git
+ModuleNotFoundError: No module named 'git'

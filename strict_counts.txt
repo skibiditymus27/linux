@@ -1,0 +1,82 @@
+WARNING: DT compatible string "usbffff,2" appears un-documented -- check ./Documentation/devicetree/bindings/
+WARNING: DT compatible string vendor "usbffff" appears un-documented -- check ./Documentation/devicetree/bindings/vendor-prefixes.yaml
+CHECK: line length of 101 exceeds 100 columns
+WARNING: DT compatible string "google,arche-platform" appears un-documented -- check ./Documentation/devicetree/bindings/
+WARNING: DT compatible string "toshiba,apb-dummy-codec" appears un-documented -- check ./Documentation/devicetree/bindings/
+CHECK: struct mutex definition without comment
+CHECK: struct mutex definition without comment
+CHECK: Macro argument reuse 'dir' - possible side-effects?
+WARNING: char * array declaration might be better as static const
+CHECK: struct mutex definition without comment
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: struct mutex definition without comment
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: struct mutex definition without comment
+CHECK: struct mutex definition without comment
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: Prefer using the BIT macro
+CHECK: Prefer using the BIT macro
+CHECK: Alignment should match open parenthesis
+CHECK: Macro argument reuse 'f' - possible side-effects?
+CHECK: Macro argument reuse 'op' - possible side-effects?
+CHECK: Macro argument 'op' may be better as '(op)' to avoid precedence issues
+CHECK: Please use a blank line after function/struct/union/enum declarations
+CHECK: Please use a blank line after function/struct/union/enum declarations
+CHECK: line length of 112 exceeds 100 columns
+CHECK: line length of 116 exceeds 100 columns
+CHECK: line length of 119 exceeds 100 columns
+CHECK: line length of 114 exceeds 100 columns
+CHECK: struct mutex definition without comment
+CHECK: struct mutex definition without comment
+ERROR: code indent should use tabs where possible
+WARNING: please, no spaces at the start of a line
+ERROR: code indent should use tabs where possible
+WARNING: please, no spaces at the start of a line
+ERROR: code indent should use tabs where possible
+WARNING: please, no spaces at the start of a line
+ERROR: code indent should use tabs where possible
+WARNING: please, no spaces at the start of a line
+ERROR: code indent should use tabs where possible
+WARNING: please, no spaces at the start of a line
+ERROR: code indent should use tabs where possible
+WARNING: please, no spaces at the start of a line
+CHECK: struct mutex definition without comment
+CHECK: Macro argument reuse 'field' - possible side-effects?
+CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+CHECK: Macro argument 'name' may be better as '(name)' to avoid precedence issues
+CHECK: Macro argument 'name' may be better as '(name)' to avoid precedence issues
+WARNING: Non-declarative macros with multiple statements should be enclosed in a do - while loop
+CHECK: Macro argument reuse 'field' - possible side-effects?
+CHECK: Macro argument reuse 'field' - possible side-effects?
+CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+CHECK: Macro argument reuse 'field' - possible side-effects?
+CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+WARNING: Argument 'conn' is not used in function-like macro
+CHECK: Macro argument reuse 'field' - possible side-effects?
+CHECK: Macro argument 'field' may be better as '(field)' to avoid precedence issues
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: struct mutex definition without comment
+CHECK: struct mutex definition without comment
+CHECK: Lines should not end with a '('
+CHECK: struct mutex definition without comment
+CHECK: Lines should not end with a '('
+CHECK: spinlock_t definition without comment
+CHECK: spinlock_t definition without comment
+CHECK: struct mutex definition without comment
+WARNING: Deprecated use of 'DEFINE_IDR', prefer 'DEFINE_XARRAY' instead
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('
+CHECK: Lines should not end with a '('

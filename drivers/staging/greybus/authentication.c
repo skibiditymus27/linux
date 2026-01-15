@@ -15,25 +15,25 @@
 #include "greybus_authentication.h"
 #include "firmware.h"
 
-#define CAP_TIMEOUT_MS		1000
+#define CAP_TIMEOUT_MS 1000
 
 /*
  * Number of minor devices this driver supports.
  * There will be exactly one required per Interface.
  */
-#define NUM_MINORS		U8_MAX
+#define NUM_MINORS U8_MAX
 
 struct gb_cap {
-	struct device		*parent;
-	struct gb_connection	*connection;
-	struct kref		kref;
-	struct list_head	node;
-	bool			disabled; /* connection getting disabled */
+	struct device *parent;
+	struct gb_connection *connection;
+	struct kref kref;
+	struct list_head node;
+	bool disabled; /* connection getting disabled */
 
-	struct mutex		mutex;
-	struct cdev		cdev;
-	struct device		*class_device;
-	dev_t			dev_num;
+	struct mutex mutex;
+	struct cdev cdev;
+	struct device *class_device;
+	dev_t dev_num;
 };
 
 static const struct class cap_class = {
@@ -112,11 +112,9 @@ static int cap_get_ims_certificate(struct gb_cap *cap, u32 class, u32 id,
 	struct gb_operation *op;
 	int ret;
 
-	op = gb_operation_create_flags(connection,
-				       GB_CAP_TYPE_GET_IMS_CERTIFICATE,
-				       sizeof(*request), max_size,
-				       GB_OPERATION_FLAG_SHORT_RESPONSE,
-				       GFP_KERNEL);
+	op = gb_operation_create_flags(
+		connection, GB_CAP_TYPE_GET_IMS_CERTIFICATE, sizeof(*request),
+		max_size, GB_OPERATION_FLAG_SHORT_RESPONSE, GFP_KERNEL);
 	if (!op)
 		return -ENOMEM;
 
@@ -203,8 +201,7 @@ static int cap_release(struct inode *inode, struct file *file)
 	return 0;
 }
 
-static int cap_ioctl(struct gb_cap *cap, unsigned int cmd,
-		     void __user *buf)
+static int cap_ioctl(struct gb_cap *cap, unsigned int cmd, void __user *buf)
 {
 	struct cap_ioc_get_endpoint_uid endpoint_uid;
 	struct cap_ioc_get_ims_certificate *ims_cert;
@@ -244,13 +241,11 @@ static int cap_ioctl(struct gb_cap *cap, unsigned int cmd,
 		if (IS_ERR(authenticate))
 			return PTR_ERR(authenticate);
 
-		ret = cap_authenticate(cap, authenticate->auth_type,
-				       authenticate->uid,
-				       authenticate->challenge,
-				       &authenticate->result_code,
-				       authenticate->response,
-				       &authenticate->signature_size,
-				       authenticate->signature);
+		ret = cap_authenticate(
+			cap, authenticate->auth_type, authenticate->uid,
+			authenticate->challenge, &authenticate->result_code,
+			authenticate->response, &authenticate->signature_size,
+			authenticate->signature);
 		if (!ret && copy_to_user(buf, authenticate, size))
 			ret = -EFAULT;
 		kfree(authenticate);
@@ -292,10 +287,10 @@ static long cap_ioctl_unlocked(struct file *file, unsigned int cmd,
 }
 
 static const struct file_operations cap_fops = {
-	.owner		= THIS_MODULE,
-	.open		= cap_open,
-	.release	= cap_release,
-	.unlocked_ioctl	= cap_ioctl_unlocked,
+	.owner = THIS_MODULE,
+	.open = cap_open,
+	.release = cap_release,
+	.unlocked_ioctl = cap_ioctl_unlocked,
 };
 
 int gb_cap_connection_init(struct gb_connection *connection)

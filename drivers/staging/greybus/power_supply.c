@@ -15,42 +15,42 @@
 #define PROP_MAX 32
 
 struct gb_power_supply_prop {
-	enum power_supply_property	prop;
-	u8				gb_prop;
-	int				val;
-	int				previous_val;
-	bool				is_writeable;
+	enum power_supply_property prop;
+	u8 gb_prop;
+	int val;
+	int previous_val;
+	bool is_writeable;
 };
 
 struct gb_power_supply {
-	u8				id;
-	bool				registered;
-	struct power_supply		*psy;
-	struct power_supply_desc	desc;
-	char				name[64];
-	struct gb_power_supplies	*supplies;
-	struct delayed_work		work;
-	char				*manufacturer;
-	char				*model_name;
-	char				*serial_number;
-	u8				type;
-	u8				properties_count;
-	u8				properties_count_str;
-	unsigned long			last_update;
-	u8				cache_invalid;
-	unsigned int			update_interval;
-	bool				changed;
-	struct gb_power_supply_prop	*props;
-	enum power_supply_property	*props_raw;
-	bool				pm_acquired;
-	struct mutex			supply_lock;
+	u8 id;
+	bool registered;
+	struct power_supply *psy;
+	struct power_supply_desc desc;
+	char name[64];
+	struct gb_power_supplies *supplies;
+	struct delayed_work work;
+	char *manufacturer;
+	char *model_name;
+	char *serial_number;
+	u8 type;
+	u8 properties_count;
+	u8 properties_count_str;
+	unsigned long last_update;
+	u8 cache_invalid;
+	unsigned int update_interval;
+	bool changed;
+	struct gb_power_supply_prop *props;
+	enum power_supply_property *props_raw;
+	bool pm_acquired;
+	struct mutex supply_lock;
 };
 
 struct gb_power_supplies {
-	struct gb_connection	*connection;
-	u8			supplies_count;
-	struct gb_power_supply	*supply;
-	struct mutex		supplies_lock;
+	struct gb_connection *connection;
+	u8 supplies_count;
+	struct gb_power_supply *supply;
+	struct mutex supplies_lock;
 };
 
 #define to_gb_power_supply(x) power_supply_get_drvdata(x)
@@ -60,13 +60,13 @@ struct gb_power_supplies {
  * like kernel versions or vendor specific versions
  */
 #ifndef POWER_SUPPLY_PROP_VOLTAGE_BOOT
-	#define POWER_SUPPLY_PROP_VOLTAGE_BOOT	-1
+#define POWER_SUPPLY_PROP_VOLTAGE_BOOT -1
 #endif
 #ifndef POWER_SUPPLY_PROP_CURRENT_BOOT
-	#define POWER_SUPPLY_PROP_CURRENT_BOOT	-1
+#define POWER_SUPPLY_PROP_CURRENT_BOOT -1
 #endif
 #ifndef POWER_SUPPLY_PROP_CALIBRATE
-	#define POWER_SUPPLY_PROP_CALIBRATE	-1
+#define POWER_SUPPLY_PROP_CALIBRATE -1
 #endif
 
 /* cache time in milliseconds, if cache_time is set to 0 cache is disable */
@@ -79,8 +79,8 @@ static unsigned int update_interval_init = 1 * HZ;
 static unsigned int update_interval_max = 30 * HZ;
 
 struct gb_power_supply_changes {
-	enum power_supply_property	prop;
-	u32				tolerance_change;
+	enum power_supply_property prop;
+	u32 tolerance_change;
 	void (*prop_changed)(struct gb_power_supply *gbpsy,
 			     struct gb_power_supply_prop *prop);
 };
@@ -89,17 +89,20 @@ static void gb_power_supply_state_change(struct gb_power_supply *gbpsy,
 					 struct gb_power_supply_prop *prop);
 
 static const struct gb_power_supply_changes psy_props_changes[] = {
-	{	.prop			= GB_POWER_SUPPLY_PROP_STATUS,
-		.tolerance_change	= 0,
-		.prop_changed		= gb_power_supply_state_change,
+	{
+		.prop = GB_POWER_SUPPLY_PROP_STATUS,
+		.tolerance_change = 0,
+		.prop_changed = gb_power_supply_state_change,
 	},
-	{	.prop			= GB_POWER_SUPPLY_PROP_TEMP,
-		.tolerance_change	= 500,
-		.prop_changed		= NULL,
+	{
+		.prop = GB_POWER_SUPPLY_PROP_TEMP,
+		.tolerance_change = 500,
+		.prop_changed = NULL,
 	},
-	{	.prop			= GB_POWER_SUPPLY_PROP_ONLINE,
-		.tolerance_change	= 0,
-		.prop_changed		= NULL,
+	{
+		.prop = GB_POWER_SUPPLY_PROP_ONLINE,
+		.tolerance_change = 0,
+		.prop_changed = NULL,
 	},
 };
 
@@ -432,8 +435,9 @@ static void prop_append(struct gb_power_supply *gbpsy,
 	enum power_supply_property *new_props_raw;
 
 	gbpsy->properties_count_str++;
-	new_props_raw = krealloc(gbpsy->props_raw, total_props(gbpsy) *
-				 sizeof(enum power_supply_property),
+	new_props_raw = krealloc(gbpsy->props_raw,
+				 total_props(gbpsy) *
+					 sizeof(enum power_supply_property),
 				 GFP_KERNEL);
 	if (!new_props_raw)
 		return;
@@ -481,8 +485,8 @@ static int gb_power_supply_description_get(struct gb_power_supply *gbpsy)
 	req.psy_id = gbpsy->id;
 
 	ret = gb_operation_sync(connection,
-				GB_POWER_SUPPLY_TYPE_GET_DESCRIPTION,
-				&req, sizeof(req), &resp, sizeof(resp));
+				GB_POWER_SUPPLY_TYPE_GET_DESCRIPTION, &req,
+				sizeof(req), &resp, sizeof(resp));
 	if (ret < 0)
 		return ret;
 
@@ -492,8 +496,8 @@ static int gb_power_supply_description_get(struct gb_power_supply *gbpsy)
 	gbpsy->model_name = kstrndup(resp.model, PROP_MAX, GFP_KERNEL);
 	if (!gbpsy->model_name)
 		return -ENOMEM;
-	gbpsy->serial_number = kstrndup(resp.serial_number, PROP_MAX,
-					GFP_KERNEL);
+	gbpsy->serial_number =
+		kstrndup(resp.serial_number, PROP_MAX, GFP_KERNEL);
 	if (!gbpsy->serial_number)
 		return -ENOMEM;
 
@@ -538,9 +542,10 @@ static int gb_power_supply_prop_descriptors_get(struct gb_power_supply *gbpsy)
 	for (i = 0; i < props_count; i++) {
 		ret = get_psp_from_gb_prop(resp->props[i].property, &psp);
 		if (ret < 0) {
-			dev_warn(&connection->bundle->dev,
-				 "greybus property %u it is not supported by this kernel, dropped\n",
-				 resp->props[i].property);
+			dev_warn(
+				&connection->bundle->dev,
+				"greybus property %u it is not supported by this kernel, dropped\n",
+				resp->props[i].property);
 			gbpsy->properties_count--;
 		}
 	}
@@ -633,9 +638,10 @@ static int __gb_power_supply_property_get(struct gb_power_supply *gbpsy,
 	return 0;
 }
 
-static int __gb_power_supply_property_strval_get(struct gb_power_supply *gbpsy,
-						 enum power_supply_property psp,
-						 union power_supply_propval *val)
+static int
+__gb_power_supply_property_strval_get(struct gb_power_supply *gbpsy,
+				      enum power_supply_property psp,
+				      union power_supply_propval *val)
 {
 	switch (psp) {
 	case POWER_SUPPLY_PROP_MODEL_NAME:
@@ -734,9 +740,8 @@ static void gb_power_supply_status_update(struct gb_power_supply *gbpsy)
 
 static void gb_power_supply_work(struct work_struct *work)
 {
-	struct gb_power_supply *gbpsy = container_of(work,
-						     struct gb_power_supply,
-						     work.work);
+	struct gb_power_supply *gbpsy =
+		container_of(work, struct gb_power_supply, work.work);
 
 	/*
 	 * if the poll interval is not set, disable polling, this is helpful
@@ -750,8 +755,7 @@ static void gb_power_supply_work(struct work_struct *work)
 	schedule_delayed_work(&gbpsy->work, gbpsy->update_interval);
 }
 
-static int get_property(struct power_supply *b,
-			enum power_supply_property psp,
+static int get_property(struct power_supply *b, enum power_supply_property psp,
 			union power_supply_propval *val)
 {
 	struct gb_power_supply *gbpsy = to_gb_power_supply(b);
@@ -762,8 +766,7 @@ static int get_property(struct power_supply *b,
 }
 
 static int gb_power_supply_property_set(struct gb_power_supply *gbpsy,
-					enum power_supply_property psp,
-					int val)
+					enum power_supply_property psp, int val)
 {
 	struct gb_connection *connection = get_conn_from_psy(gbpsy);
 	struct gb_power_supply_prop *prop;
@@ -797,8 +800,7 @@ out:
 	return ret;
 }
 
-static int set_property(struct power_supply *b,
-			enum power_supply_property psp,
+static int set_property(struct power_supply *b, enum power_supply_property psp,
 			const union power_supply_propval *val)
 {
 	struct gb_power_supply *gbpsy = to_gb_power_supply(b);
@@ -821,12 +823,12 @@ static int gb_power_supply_register(struct gb_power_supply *gbpsy)
 
 	cfg.drv_data = gbpsy;
 
-	gbpsy->desc.name		= gbpsy->name;
-	gbpsy->desc.type		= gbpsy->type;
-	gbpsy->desc.properties		= gbpsy->props_raw;
-	gbpsy->desc.num_properties	= total_props(gbpsy);
-	gbpsy->desc.get_property	= get_property;
-	gbpsy->desc.set_property	= set_property;
+	gbpsy->desc.name = gbpsy->name;
+	gbpsy->desc.type = gbpsy->type;
+	gbpsy->desc.properties = gbpsy->props_raw;
+	gbpsy->desc.num_properties = total_props(gbpsy);
+	gbpsy->desc.get_property = get_property;
+	gbpsy->desc.set_property = set_property;
 	gbpsy->desc.property_is_writeable = property_is_writeable;
 
 	gbpsy->psy = power_supply_register(&connection->bundle->dev,
@@ -876,12 +878,12 @@ static int gb_power_supplies_get_count(struct gb_power_supplies *supplies)
 	int ret;
 
 	ret = gb_operation_sync(supplies->connection,
-				GB_POWER_SUPPLY_TYPE_GET_SUPPLIES,
-				NULL, 0, &resp, sizeof(resp));
+				GB_POWER_SUPPLY_TYPE_GET_SUPPLIES, NULL, 0,
+				&resp, sizeof(resp));
 	if (ret < 0)
 		return ret;
 
-	if  (!resp.supplies_count)
+	if (!resp.supplies_count)
 		return -EINVAL;
 
 	supplies->supplies_count = resp.supplies_count;
@@ -909,8 +911,8 @@ static int gb_power_supply_enable(struct gb_power_supply *gbpsy)
 	int ret;
 
 	/* guarantee that we have an unique name, before register */
-	ret =  __gb_power_supply_set_name(gbpsy->model_name, gbpsy->name,
-					  sizeof(gbpsy->name));
+	ret = __gb_power_supply_set_name(gbpsy->model_name, gbpsy->name,
+					 sizeof(gbpsy->name));
 	if (ret < 0)
 		return ret;
 
@@ -943,8 +945,7 @@ static int gb_power_supplies_setup(struct gb_power_supplies *supplies)
 		goto out;
 
 	supplies->supply = kcalloc(supplies->supplies_count,
-				   sizeof(struct gb_power_supply),
-				   GFP_KERNEL);
+				   sizeof(struct gb_power_supply), GFP_KERNEL);
 
 	if (!supplies->supply) {
 		ret = -ENOMEM;
@@ -1124,15 +1125,15 @@ static void gb_power_supply_disconnect(struct gb_bundle *bundle)
 
 static const struct greybus_bundle_id gb_power_supply_id_table[] = {
 	{ GREYBUS_DEVICE_CLASS(GREYBUS_CLASS_POWER_SUPPLY) },
-	{ }
+	{}
 };
 MODULE_DEVICE_TABLE(greybus, gb_power_supply_id_table);
 
 static struct greybus_driver gb_power_supply_driver = {
-	.name		= "power_supply",
-	.probe		= gb_power_supply_probe,
-	.disconnect	= gb_power_supply_disconnect,
-	.id_table	= gb_power_supply_id_table,
+	.name = "power_supply",
+	.probe = gb_power_supply_probe,
+	.disconnect = gb_power_supply_disconnect,
+	.id_table = gb_power_supply_id_table,
 };
 module_greybus_driver(gb_power_supply_driver);
 

@@ -14,52 +14,52 @@
 #include <linux/greybus.h>
 #include <media/v4l2-flash-led-class.h>
 
-#define NAMES_MAX	32
+#define NAMES_MAX 32
 
 struct gb_channel {
-	u8				id;
-	u32				flags;
-	u32				color;
-	char				*color_name;
-	u8				fade_in;
-	u8				fade_out;
-	u32				mode;
-	char				*mode_name;
-	struct attribute		**attrs;
-	struct attribute_group		*attr_group;
-	const struct attribute_group	**attr_groups;
-	struct led_classdev		*led;
-	struct led_classdev_flash	fled;
-	struct led_flash_setting	intensity_uA;
-	struct led_flash_setting	timeout_us;
-	struct gb_light			*light;
-	bool				is_registered;
-	bool				releasing;
-	bool				strobe_state;
-	bool				active;
-	struct mutex			lock;
+	u8 id;
+	u32 flags;
+	u32 color;
+	char *color_name;
+	u8 fade_in;
+	u8 fade_out;
+	u32 mode;
+	char *mode_name;
+	struct attribute **attrs;
+	struct attribute_group *attr_group;
+	const struct attribute_group **attr_groups;
+	struct led_classdev *led;
+	struct led_classdev_flash fled;
+	struct led_flash_setting intensity_uA;
+	struct led_flash_setting timeout_us;
+	struct gb_light *light;
+	bool is_registered;
+	bool releasing;
+	bool strobe_state;
+	bool active;
+	struct mutex lock;
 };
 
 struct gb_light {
-	u8			id;
-	char			*name;
-	struct gb_lights	*glights;
-	u32			flags;
-	u8			channels_count;
-	struct gb_channel	*channels;
-	bool			has_flash;
-	bool			ready;
+	u8 id;
+	char *name;
+	struct gb_lights *glights;
+	u32 flags;
+	u8 channels_count;
+	struct gb_channel *channels;
+	bool has_flash;
+	bool ready;
 #if IS_REACHABLE(CONFIG_V4L2_FLASH_LED_CLASS)
-	struct v4l2_flash	*v4l2_flash;
-	struct v4l2_flash	*v4l2_flash_ind;
+	struct v4l2_flash *v4l2_flash;
+	struct v4l2_flash *v4l2_flash_ind;
 #endif
 };
 
 struct gb_lights {
-	struct gb_connection	*connection;
-	u8			lights_count;
-	struct gb_light		*lights;
-	struct mutex		lights_lock;
+	struct gb_connection *connection;
+	u8 lights_count;
+	struct gb_light *lights;
+	struct mutex lights_lock;
 };
 
 static void gb_lights_channel_free(struct gb_channel *channel);
@@ -76,8 +76,9 @@ static struct gb_connection *get_conn_from_light(struct gb_light *light)
 
 static bool is_channel_flash(struct gb_channel *channel)
 {
-	return !!(channel->mode & (GB_CHANNEL_MODE_FLASH | GB_CHANNEL_MODE_TORCH
-				   | GB_CHANNEL_MODE_INDICATOR));
+	return !!(channel->mode &
+		  (GB_CHANNEL_MODE_FLASH | GB_CHANNEL_MODE_TORCH |
+		   GB_CHANNEL_MODE_INDICATOR));
 }
 
 static struct gb_channel *get_channel_from_cdev(struct led_classdev *cdev)
@@ -147,7 +148,7 @@ static int __gb_lights_flash_brightness_set(struct gb_channel *channel)
 
 	/* For not flash we need to convert brightness to intensity */
 	intensity = channel->intensity_uA.min +
-			(channel->intensity_uA.step * channel->led->brightness);
+		    (channel->intensity_uA.step * channel->led->brightness);
 
 	return __gb_lights_flash_intensity_set(channel, intensity);
 }
@@ -165,51 +166,50 @@ static void led_unlock(struct led_classdev *cdev)
 	mutex_unlock(&cdev->led_access);
 }
 
-#define gb_lights_fade_attr(__dir)					\
-static ssize_t fade_##__dir##_show(struct device *dev,			\
-				   struct device_attribute *attr,	\
-				   char *buf)				\
-{									\
-	struct led_classdev *cdev = dev_get_drvdata(dev);		\
-	struct gb_channel *channel = get_channel_from_cdev(cdev);	\
-									\
-	return sprintf(buf, "%u\n", channel->fade_##__dir);		\
-}									\
-									\
-static ssize_t fade_##__dir##_store(struct device *dev,			\
-				    struct device_attribute *attr,	\
-				    const char *buf, size_t size)	\
-{									\
-	struct led_classdev *cdev = dev_get_drvdata(dev);		\
-	struct gb_channel *channel = get_channel_from_cdev(cdev);	\
-	u8 fade;							\
-	int ret;							\
-									\
-	led_lock(cdev);							\
-	if (led_sysfs_is_disabled(cdev)) {				\
-		ret = -EBUSY;						\
-		goto unlock;						\
-	}								\
-									\
-	ret = kstrtou8(buf, 0, &fade);					\
-	if (ret < 0) {							\
-		dev_err(dev, "could not parse fade value %d\n", ret);	\
-		goto unlock;						\
-	}								\
-	if (channel->fade_##__dir == fade)				\
-		goto unlock;						\
-	channel->fade_##__dir = fade;					\
-									\
-	ret = gb_lights_fade_set(channel);				\
-	if (ret < 0)							\
-		goto unlock;						\
-									\
-	ret = size;							\
-unlock:									\
-	led_unlock(cdev);						\
-	return ret;							\
-}									\
-static DEVICE_ATTR_RW(fade_##__dir)
+#define gb_lights_fade_attr(__dir)                                            \
+	static ssize_t fade_##__dir##_show(                                   \
+		struct device *dev, struct device_attribute *attr, char *buf) \
+	{                                                                     \
+		struct led_classdev *cdev = dev_get_drvdata(dev);             \
+		struct gb_channel *channel = get_channel_from_cdev(cdev);     \
+                                                                              \
+		return sprintf(buf, "%u\n", channel->fade_##__dir);           \
+	}                                                                     \
+                                                                              \
+	static ssize_t fade_##__dir##_store(struct device *dev,               \
+					    struct device_attribute *attr,    \
+					    const char *buf, size_t size)     \
+	{                                                                     \
+		struct led_classdev *cdev = dev_get_drvdata(dev);             \
+		struct gb_channel *channel = get_channel_from_cdev(cdev);     \
+		u8 fade;                                                      \
+		int ret;                                                      \
+                                                                              \
+		led_lock(cdev);                                               \
+		if (led_sysfs_is_disabled(cdev)) {                            \
+			ret = -EBUSY;                                         \
+			goto unlock;                                          \
+		}                                                             \
+                                                                              \
+		ret = kstrtou8(buf, 0, &fade);                                \
+		if (ret < 0) {                                                \
+			dev_err(dev, "could not parse fade value %d\n", ret); \
+			goto unlock;                                          \
+		}                                                             \
+		if (channel->fade_##__dir == fade)                            \
+			goto unlock;                                          \
+		channel->fade_##__dir = fade;                                 \
+                                                                              \
+		ret = gb_lights_fade_set(channel);                            \
+		if (ret < 0)                                                  \
+			goto unlock;                                          \
+                                                                              \
+		ret = size;                                                   \
+unlock:                                                                       \
+		led_unlock(cdev);                                             \
+		return ret;                                                   \
+	}                                                                     \
+	static DEVICE_ATTR_RW(fade_##__dir)
 
 gb_lights_fade_attr(in);
 gb_lights_fade_attr(out);
@@ -275,8 +275,8 @@ static int channel_attr_groups_set(struct gb_channel *channel,
 	channel->attr_group = kzalloc(sizeof(*channel->attr_group), GFP_KERNEL);
 	if (!channel->attr_group)
 		return -ENOMEM;
-	channel->attr_groups = kcalloc(2, sizeof(*channel->attr_groups),
-				       GFP_KERNEL);
+	channel->attr_groups =
+		kcalloc(2, sizeof(*channel->attr_groups), GFP_KERNEL);
 	if (!channel->attr_groups)
 		return -ENOMEM;
 
@@ -314,8 +314,8 @@ static int gb_lights_fade_set(struct gb_channel *channel)
 	req.channel_id = channel->id;
 	req.fade_in = channel->fade_in;
 	req.fade_out = channel->fade_out;
-	ret = gb_operation_sync(connection, GB_LIGHTS_TYPE_SET_FADE,
-				&req, sizeof(req), NULL, 0);
+	ret = gb_operation_sync(connection, GB_LIGHTS_TYPE_SET_FADE, &req,
+				sizeof(req), NULL, 0);
 
 	gb_pm_runtime_put_autosuspend(bundle);
 
@@ -339,8 +339,8 @@ static int gb_lights_color_set(struct gb_channel *channel, u32 color)
 	req.light_id = channel->light->id;
 	req.channel_id = channel->id;
 	req.color = cpu_to_le32(color);
-	ret = gb_operation_sync(connection, GB_LIGHTS_TYPE_SET_COLOR,
-				&req, sizeof(req), NULL, 0);
+	ret = gb_operation_sync(connection, GB_LIGHTS_TYPE_SET_COLOR, &req,
+				sizeof(req), NULL, 0);
 
 	gb_pm_runtime_put_autosuspend(bundle);
 
@@ -366,8 +366,8 @@ static int __gb_lights_led_brightness_set(struct gb_channel *channel)
 	req.channel_id = channel->id;
 	req.brightness = (u8)channel->led->brightness;
 
-	ret = gb_operation_sync(connection, GB_LIGHTS_TYPE_SET_BRIGHTNESS,
-				&req, sizeof(req), NULL, 0);
+	ret = gb_operation_sync(connection, GB_LIGHTS_TYPE_SET_BRIGHTNESS, &req,
+				sizeof(req), NULL, 0);
 	if (ret < 0)
 		goto out_pm_put;
 
@@ -513,7 +513,7 @@ static int gb_lights_light_v4l2_register(struct gb_light *light)
 {
 	struct gb_connection *connection = get_conn_from_light(light);
 	struct device *dev = &connection->bundle->dev;
-	struct v4l2_flash_config sd_cfg = { {0} }, sd_cfg_ind = { {0} };
+	struct v4l2_flash_config sd_cfg = { { 0 } }, sd_cfg_ind = { { 0 } };
 	struct led_classdev_flash *fled;
 	struct led_classdev *iled = NULL;
 	struct gb_channel *channel_torch, *channel_ind, *channel_flash;
@@ -544,13 +544,14 @@ static int gb_lights_light_v4l2_register(struct gb_light *light)
 
 	/* Set the possible values to faults, in our case all faults */
 	sd_cfg.flash_faults = LED_FAULT_OVER_VOLTAGE | LED_FAULT_TIMEOUT |
-		LED_FAULT_OVER_TEMPERATURE | LED_FAULT_SHORT_CIRCUIT |
-		LED_FAULT_OVER_CURRENT | LED_FAULT_INDICATOR |
-		LED_FAULT_UNDER_VOLTAGE | LED_FAULT_INPUT_VOLTAGE |
-		LED_FAULT_LED_OVER_TEMPERATURE;
+			      LED_FAULT_OVER_TEMPERATURE |
+			      LED_FAULT_SHORT_CIRCUIT | LED_FAULT_OVER_CURRENT |
+			      LED_FAULT_INDICATOR | LED_FAULT_UNDER_VOLTAGE |
+			      LED_FAULT_INPUT_VOLTAGE |
+			      LED_FAULT_LED_OVER_TEMPERATURE;
 
-	light->v4l2_flash = v4l2_flash_init(dev, NULL, fled, &v4l2_flash_ops,
-					    &sd_cfg);
+	light->v4l2_flash =
+		v4l2_flash_init(dev, NULL, fled, &v4l2_flash_ops, &sd_cfg);
 	if (IS_ERR(light->v4l2_flash))
 		return PTR_ERR(light->v4l2_flash);
 
@@ -590,8 +591,8 @@ static void gb_lights_light_v4l2_unregister(struct gb_light *light)
 static int gb_lights_flash_intensity_set(struct led_classdev_flash *fcdev,
 					 u32 brightness)
 {
-	struct gb_channel *channel = container_of(fcdev, struct gb_channel,
-						  fled);
+	struct gb_channel *channel =
+		container_of(fcdev, struct gb_channel, fled);
 	int ret;
 
 	ret = __gb_lights_flash_intensity_set(channel, brightness);
@@ -614,8 +615,8 @@ static int gb_lights_flash_intensity_get(struct led_classdev_flash *fcdev,
 static int gb_lights_flash_strobe_set(struct led_classdev_flash *fcdev,
 				      bool state)
 {
-	struct gb_channel *channel = container_of(fcdev, struct gb_channel,
-						  fled);
+	struct gb_channel *channel =
+		container_of(fcdev, struct gb_channel, fled);
 	struct gb_connection *connection = get_conn_from_channel(channel);
 	struct gb_bundle *bundle = connection->bundle;
 	struct gb_lights_set_flash_strobe_request req;
@@ -645,8 +646,8 @@ static int gb_lights_flash_strobe_set(struct led_classdev_flash *fcdev,
 static int gb_lights_flash_strobe_get(struct led_classdev_flash *fcdev,
 				      bool *state)
 {
-	struct gb_channel *channel = container_of(fcdev, struct gb_channel,
-						  fled);
+	struct gb_channel *channel =
+		container_of(fcdev, struct gb_channel, fled);
 
 	*state = channel->strobe_state;
 	return 0;
@@ -655,8 +656,8 @@ static int gb_lights_flash_strobe_get(struct led_classdev_flash *fcdev,
 static int gb_lights_flash_timeout_set(struct led_classdev_flash *fcdev,
 				       u32 timeout)
 {
-	struct gb_channel *channel = container_of(fcdev, struct gb_channel,
-						  fled);
+	struct gb_channel *channel =
+		container_of(fcdev, struct gb_channel, fled);
 	struct gb_connection *connection = get_conn_from_channel(channel);
 	struct gb_bundle *bundle = connection->bundle;
 	struct gb_lights_set_flash_timeout_request req;
@@ -686,8 +687,8 @@ static int gb_lights_flash_timeout_set(struct led_classdev_flash *fcdev,
 static int gb_lights_flash_fault_get(struct led_classdev_flash *fcdev,
 				     u32 *fault)
 {
-	struct gb_channel *channel = container_of(fcdev, struct gb_channel,
-						  fled);
+	struct gb_channel *channel =
+		container_of(fcdev, struct gb_channel, fled);
 	struct gb_connection *connection = get_conn_from_channel(channel);
 	struct gb_bundle *bundle = connection->bundle;
 	struct gb_lights_get_flash_fault_request req;
@@ -715,12 +716,12 @@ static int gb_lights_flash_fault_get(struct led_classdev_flash *fcdev,
 }
 
 static const struct led_flash_ops gb_lights_flash_ops = {
-	.flash_brightness_set	= gb_lights_flash_intensity_set,
-	.flash_brightness_get	= gb_lights_flash_intensity_get,
-	.strobe_set		= gb_lights_flash_strobe_set,
-	.strobe_get		= gb_lights_flash_strobe_get,
-	.timeout_set		= gb_lights_flash_timeout_set,
-	.fault_get		= gb_lights_flash_fault_get,
+	.flash_brightness_set = gb_lights_flash_intensity_set,
+	.flash_brightness_get = gb_lights_flash_intensity_get,
+	.strobe_set = gb_lights_flash_strobe_set,
+	.strobe_get = gb_lights_flash_strobe_get,
+	.timeout_set = gb_lights_flash_timeout_set,
+	.fault_get = gb_lights_flash_fault_get,
 };
 
 static int __gb_lights_channel_torch_attach(struct gb_channel *channel,
@@ -779,8 +780,8 @@ static int __gb_lights_flash_led_register(struct gb_channel *channel)
 	 * If light have torch mode channel, this channel will be the led
 	 * classdev of the registered above flash classdev
 	 */
-	channel_torch = get_channel_from_mode(channel->light,
-					      GB_CHANNEL_MODE_TORCH);
+	channel_torch =
+		get_channel_from_mode(channel->light, GB_CHANNEL_MODE_TORCH);
 	if (channel_torch) {
 		ret = __gb_lights_channel_torch_attach(channel, channel_torch);
 		if (ret < 0)
@@ -818,8 +819,8 @@ static int gb_lights_channel_flash_config(struct gb_channel *channel)
 	req.channel_id = channel->id;
 
 	ret = gb_operation_sync(connection,
-				GB_LIGHTS_TYPE_GET_CHANNEL_FLASH_CONFIG,
-				&req, sizeof(req), &conf, sizeof(conf));
+				GB_LIGHTS_TYPE_GET_CHANNEL_FLASH_CONFIG, &req,
+				sizeof(req), &conf, sizeof(conf));
 	if (ret < 0)
 		return ret;
 
@@ -998,8 +999,8 @@ static int gb_lights_light_config(struct gb_lights *glights, u8 id)
 	req.id = id;
 
 	ret = gb_operation_sync(glights->connection,
-				GB_LIGHTS_TYPE_GET_LIGHT_CONFIG,
-				&req, sizeof(req), &conf, sizeof(conf));
+				GB_LIGHTS_TYPE_GET_LIGHT_CONFIG, &req,
+				sizeof(req), &conf, sizeof(conf));
 	if (ret < 0)
 		return ret;
 
@@ -1198,7 +1199,7 @@ static int gb_lights_request_handler(struct gb_operation *op)
 	struct gb_light *light;
 	struct gb_message *request;
 	struct gb_lights_event_request *payload;
-	int ret =  0;
+	int ret = 0;
 	u8 light_id;
 	u8 event;
 
@@ -1327,15 +1328,15 @@ static void gb_lights_disconnect(struct gb_bundle *bundle)
 
 static const struct greybus_bundle_id gb_lights_id_table[] = {
 	{ GREYBUS_DEVICE_CLASS(GREYBUS_CLASS_LIGHTS) },
-	{ }
+	{}
 };
 MODULE_DEVICE_TABLE(greybus, gb_lights_id_table);
 
 static struct greybus_driver gb_lights_driver = {
-	.name		= "lights",
-	.probe		= gb_lights_probe,
-	.disconnect	= gb_lights_disconnect,
-	.id_table	= gb_lights_id_table,
+	.name = "lights",
+	.probe = gb_lights_probe,
+	.disconnect = gb_lights_disconnect,
+	.id_table = gb_lights_id_table,
 };
 module_greybus_driver(gb_lights_driver);
 

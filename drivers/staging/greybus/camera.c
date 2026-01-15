@@ -84,82 +84,82 @@ static const struct gb_camera_fmt_info gb_fmt_info[] = {
 	{
 		.mbus_code = V4L2_MBUS_FMT_UYVY8_1X16,
 		.gb_format = 0x01,
-		.bpp	   = 16,
+		.bpp = 16,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_NV12_1x8,
 		.gb_format = 0x12,
-		.bpp	   = 12,
+		.bpp = 12,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_NV21_1x8,
 		.gb_format = 0x13,
-		.bpp	   = 12,
+		.bpp = 12,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_YU12_1x8,
 		.gb_format = 0x16,
-		.bpp	   = 12,
+		.bpp = 12,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_YV12_1x8,
 		.gb_format = 0x17,
-		.bpp	   = 12,
+		.bpp = 12,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_JPEG_1X8,
 		.gb_format = 0x40,
-		.bpp	   = 0,
+		.bpp = 0,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_GB_CAM_METADATA_1X8,
 		.gb_format = 0x41,
-		.bpp	   = 0,
+		.bpp = 0,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_GB_CAM_DEBUG_DATA_1X8,
 		.gb_format = 0x42,
-		.bpp	   = 0,
+		.bpp = 0,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_SBGGR10_1X10,
 		.gb_format = 0x80,
-		.bpp	   = 10,
+		.bpp = 10,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_SGBRG10_1X10,
 		.gb_format = 0x81,
-		.bpp	   = 10,
+		.bpp = 10,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_SGRBG10_1X10,
 		.gb_format = 0x82,
-		.bpp	   = 10,
+		.bpp = 10,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_SRGGB10_1X10,
 		.gb_format = 0x83,
-		.bpp	   = 10,
+		.bpp = 10,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_SBGGR12_1X12,
 		.gb_format = 0x84,
-		.bpp	   = 12,
+		.bpp = 12,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_SGBRG12_1X12,
 		.gb_format = 0x85,
-		.bpp	   = 12,
+		.bpp = 12,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_SGRBG12_1X12,
 		.gb_format = 0x86,
-		.bpp	   = 12,
+		.bpp = 12,
 	},
 	{
 		.mbus_code = V4L2_MBUS_FMT_SRGGB12_1X12,
 		.gb_format = 0x87,
-		.bpp	   = 12,
+		.bpp = 12,
 	},
 };
 
@@ -175,10 +175,10 @@ static const struct gb_camera_fmt_info *gb_camera_get_format_info(u16 gb_fmt)
 	return NULL;
 }
 
-#define ES2_APB_CDSI0_CPORT		16
-#define ES2_APB_CDSI1_CPORT		17
+#define ES2_APB_CDSI0_CPORT 16
+#define ES2_APB_CDSI1_CPORT 17
 
-#define GB_CAMERA_MAX_SETTINGS_SIZE	8192
+#define GB_CAMERA_MAX_SETTINGS_SIZE 8192
 
 static int gb_camera_operation_sync_flags(struct gb_connection *connection,
 					  int type, unsigned int flags,
@@ -192,7 +192,7 @@ static int gb_camera_operation_sync_flags(struct gb_connection *connection,
 					      *response_size, flags,
 					      GFP_KERNEL);
 	if (!operation)
-		return  -ENOMEM;
+		return -ENOMEM;
 
 	if (request_size)
 		memcpy(operation->request->payload, request, request_size);
@@ -215,8 +215,9 @@ static int gb_camera_operation_sync_flags(struct gb_connection *connection,
 	return ret;
 }
 
-static int gb_camera_get_max_pkt_size(struct gb_camera *gcam,
-				      struct gb_camera_configure_streams_response *resp)
+static int
+gb_camera_get_max_pkt_size(struct gb_camera *gcam,
+			   struct gb_camera_configure_streams_response *resp)
 {
 	unsigned int max_pkt_size = 0;
 	unsigned int i;
@@ -228,7 +229,8 @@ static int gb_camera_get_max_pkt_size(struct gb_camera *gcam,
 
 		fmt_info = gb_camera_get_format_info(cfg->format);
 		if (!fmt_info) {
-			dev_err(&gcam->bundle->dev, "unsupported greybus image format: %d\n",
+			dev_err(&gcam->bundle->dev,
+				"unsupported greybus image format: %d\n",
 				cfg->format);
 			return -EIO;
 		}
@@ -263,9 +265,10 @@ static int gb_camera_get_max_pkt_size(struct gb_camera *gcam,
  * Validate the stream configuration response verifying padding is correctly
  * set and the returned number of streams is supported
  */
-static const int gb_camera_configure_streams_validate_response(struct gb_camera *gcam,
-		struct gb_camera_configure_streams_response *resp,
-		unsigned int nstreams)
+static const int gb_camera_configure_streams_validate_response(
+	struct gb_camera *gcam,
+	struct gb_camera_configure_streams_response *resp,
+	unsigned int nstreams)
 {
 	unsigned int i;
 
@@ -285,7 +288,8 @@ static const int gb_camera_configure_streams_validate_response(struct gb_camera 
 		struct gb_camera_stream_config_response *cfg = &resp->config[i];
 
 		if (cfg->padding) {
-			dev_err(&gcam->bundle->dev, "stream #%u padding != 0\n", i);
+			dev_err(&gcam->bundle->dev, "stream #%u padding != 0\n",
+				i);
 			return -EIO;
 		}
 	}
@@ -304,26 +308,18 @@ static int gb_camera_set_intf_power_mode(struct gb_camera *gcam, u8 intf_id,
 	int ret;
 
 	if (hs)
-		ret = gb_svc_intf_set_power_mode(svc, intf_id,
-						 GB_SVC_UNIPRO_HS_SERIES_A,
-						 GB_SVC_UNIPRO_FAST_MODE, 2, 2,
-						 GB_SVC_SMALL_AMPLITUDE,
-						 GB_SVC_NO_DE_EMPHASIS,
-						 GB_SVC_UNIPRO_FAST_MODE, 2, 2,
-						 GB_SVC_PWRM_RXTERMINATION |
-						 GB_SVC_PWRM_TXTERMINATION, 0,
-						 NULL, NULL);
+		ret = gb_svc_intf_set_power_mode(
+			svc, intf_id, GB_SVC_UNIPRO_HS_SERIES_A,
+			GB_SVC_UNIPRO_FAST_MODE, 2, 2, GB_SVC_SMALL_AMPLITUDE,
+			GB_SVC_NO_DE_EMPHASIS, GB_SVC_UNIPRO_FAST_MODE, 2, 2,
+			GB_SVC_PWRM_RXTERMINATION | GB_SVC_PWRM_TXTERMINATION,
+			0, NULL, NULL);
 	else
-		ret = gb_svc_intf_set_power_mode(svc, intf_id,
-						 GB_SVC_UNIPRO_HS_SERIES_A,
-						 GB_SVC_UNIPRO_SLOW_AUTO_MODE,
-						 2, 1,
-						 GB_SVC_SMALL_AMPLITUDE,
-						 GB_SVC_NO_DE_EMPHASIS,
-						 GB_SVC_UNIPRO_SLOW_AUTO_MODE,
-						 2, 1,
-						 0, 0,
-						 NULL, NULL);
+		ret = gb_svc_intf_set_power_mode(
+			svc, intf_id, GB_SVC_UNIPRO_HS_SERIES_A,
+			GB_SVC_UNIPRO_SLOW_AUTO_MODE, 2, 1,
+			GB_SVC_SMALL_AMPLITUDE, GB_SVC_NO_DE_EMPHASIS,
+			GB_SVC_UNIPRO_SLOW_AUTO_MODE, 2, 1, 0, 0, NULL, NULL);
 
 	return ret;
 }
@@ -336,7 +332,8 @@ static int gb_camera_set_power_mode(struct gb_camera *gcam, bool hs)
 
 	ret = gb_camera_set_intf_power_mode(gcam, intf->interface_id, hs);
 	if (ret < 0) {
-		dev_err(&gcam->bundle->dev, "failed to set module interface to %s (%d)\n",
+		dev_err(&gcam->bundle->dev,
+			"failed to set module interface to %s (%d)\n",
 			hs ? "HS" : "PWM", ret);
 		return ret;
 	}
@@ -344,7 +341,8 @@ static int gb_camera_set_power_mode(struct gb_camera *gcam, bool hs)
 	ret = gb_camera_set_intf_power_mode(gcam, svc->ap_intf_id, hs);
 	if (ret < 0) {
 		gb_camera_set_intf_power_mode(gcam, intf->interface_id, !hs);
-		dev_err(&gcam->bundle->dev, "failed to set AP interface to %s (%d)\n",
+		dev_err(&gcam->bundle->dev,
+			"failed to set AP interface to %s (%d)\n",
 			hs ? "HS" : "PWM", ret);
 		return ret;
 	}
@@ -366,15 +364,16 @@ struct ap_csi_config_request {
  * TODO: Compute the number of lanes dynamically based on bandwidth
  * requirements.
  */
-#define GB_CAMERA_CSI_NUM_DATA_LANES		4
+#define GB_CAMERA_CSI_NUM_DATA_LANES 4
 
-#define GB_CAMERA_CSI_CLK_FREQ_MAX		999000000U
-#define GB_CAMERA_CSI_CLK_FREQ_MIN		100000000U
-#define GB_CAMERA_CSI_CLK_FREQ_MARGIN		150000000U
+#define GB_CAMERA_CSI_CLK_FREQ_MAX 999000000U
+#define GB_CAMERA_CSI_CLK_FREQ_MIN 100000000U
+#define GB_CAMERA_CSI_CLK_FREQ_MARGIN 150000000U
 
-static int gb_camera_setup_data_connection(struct gb_camera *gcam,
-					   struct gb_camera_configure_streams_response *resp,
-					   struct gb_camera_csi_params *csi_params)
+static int gb_camera_setup_data_connection(
+	struct gb_camera *gcam,
+	struct gb_camera_configure_streams_response *resp,
+	struct gb_camera_csi_params *csi_params)
 {
 	struct ap_csi_config_request csi_cfg;
 	struct gb_connection *conn;
@@ -387,7 +386,7 @@ static int gb_camera_setup_data_connection(struct gb_camera *gcam,
 	 */
 	conn = gb_connection_create_offloaded(gcam->bundle, gcam->data_cport_id,
 					      GB_CONNECTION_FLAG_NO_FLOWCTRL |
-					      GB_CONNECTION_FLAG_CDSI1);
+						      GB_CONNECTION_FLAG_CDSI1);
 	if (IS_ERR(conn))
 		return PTR_ERR(conn);
 
@@ -427,11 +426,11 @@ static int gb_camera_setup_data_connection(struct gb_camera *gcam,
 	}
 	csi_cfg.max_pkt_size = ret;
 
-	ret = gb_hd_output(gcam->connection->hd, &csi_cfg,
-			   sizeof(csi_cfg),
+	ret = gb_hd_output(gcam->connection->hd, &csi_cfg, sizeof(csi_cfg),
 			   GB_APB_REQUEST_CSI_TX_CONTROL, false);
 	if (ret < 0) {
-		dev_err(&gcam->bundle->dev, "failed to start the CSI transmitter\n");
+		dev_err(&gcam->bundle->dev,
+			"failed to start the CSI transmitter\n");
 		goto error_power;
 	}
 
@@ -461,12 +460,12 @@ static void gb_camera_teardown_data_connection(struct gb_camera *gcam)
 	memset(&csi_cfg, 0, sizeof(csi_cfg));
 	csi_cfg.csi_id = 1;
 
-	ret = gb_hd_output(gcam->connection->hd, &csi_cfg,
-			   sizeof(csi_cfg),
+	ret = gb_hd_output(gcam->connection->hd, &csi_cfg, sizeof(csi_cfg),
 			   GB_APB_REQUEST_CSI_TX_CONTROL, false);
 
 	if (ret < 0)
-		dev_err(&gcam->bundle->dev, "failed to stop the CSI transmitter\n");
+		dev_err(&gcam->bundle->dev,
+			"failed to stop the CSI transmitter\n");
 
 	/* Set the UniPro link to low speed mode. */
 	gb_camera_set_power_mode(gcam, false);
@@ -481,8 +480,8 @@ static void gb_camera_teardown_data_connection(struct gb_camera *gcam)
  * Camera Protocol Operations
  */
 
-static int gb_camera_capabilities(struct gb_camera *gcam,
-				  u8 *capabilities, size_t *size)
+static int gb_camera_capabilities(struct gb_camera *gcam, u8 *capabilities,
+				  size_t *size)
 {
 	int ret;
 
@@ -500,10 +499,11 @@ static int gb_camera_capabilities(struct gb_camera *gcam,
 	ret = gb_camera_operation_sync_flags(gcam->connection,
 					     GB_CAMERA_TYPE_CAPABILITIES,
 					     GB_OPERATION_FLAG_SHORT_RESPONSE,
-					     NULL, 0,
-					     (void *)capabilities, size);
+					     NULL, 0, (void *)capabilities,
+					     size);
 	if (ret)
-		dev_err(&gcam->bundle->dev, "failed to retrieve capabilities: %d\n", ret);
+		dev_err(&gcam->bundle->dev,
+			"failed to retrieve capabilities: %d\n", ret);
 
 done:
 	mutex_unlock(&gcam->mutex);
@@ -568,8 +568,7 @@ static int gb_camera_configure_streams(struct gb_camera *gcam,
 	ret = gb_camera_operation_sync_flags(gcam->connection,
 					     GB_CAMERA_TYPE_CONFIGURE_STREAMS,
 					     GB_OPERATION_FLAG_SHORT_RESPONSE,
-					     req, req_size,
-					     resp, &resp_size);
+					     req, req_size, resp, &resp_size);
 	if (ret < 0)
 		goto done;
 
@@ -625,9 +624,8 @@ static int gb_camera_configure_streams(struct gb_camera *gcam,
 	if (ret < 0) {
 		memset(req, 0, sizeof(*req));
 		gb_operation_sync(gcam->connection,
-				  GB_CAMERA_TYPE_CONFIGURE_STREAMS,
-				  req, sizeof(*req),
-				  resp, sizeof(*resp));
+				  GB_CAMERA_TYPE_CONFIGURE_STREAMS, req,
+				  sizeof(*req), resp, sizeof(*resp));
 		*flags = 0;
 		*num_streams = 0;
 		gb_pm_runtime_put_noidle(gcam->bundle);
@@ -675,8 +673,8 @@ static int gb_camera_capture(struct gb_camera *gcam, u32 request_id,
 		goto done;
 	}
 
-	ret = gb_operation_sync(gcam->connection, GB_CAMERA_TYPE_CAPTURE,
-				req, req_size, NULL, 0);
+	ret = gb_operation_sync(gcam->connection, GB_CAMERA_TYPE_CAPTURE, req,
+				req_size, NULL, 0);
 done:
 	mutex_unlock(&gcam->mutex);
 
@@ -719,21 +717,24 @@ static int gb_camera_request_handler(struct gb_operation *op)
 	struct gb_message *request;
 
 	if (op->type != GB_CAMERA_TYPE_METADATA) {
-		dev_err(&gcam->bundle->dev, "Unsupported unsolicited event: %u\n", op->type);
+		dev_err(&gcam->bundle->dev,
+			"Unsupported unsolicited event: %u\n", op->type);
 		return -EINVAL;
 	}
 
 	request = op->request;
 
 	if (request->payload_size < sizeof(*payload)) {
-		dev_err(&gcam->bundle->dev, "Wrong event size received (%zu < %zu)\n",
+		dev_err(&gcam->bundle->dev,
+			"Wrong event size received (%zu < %zu)\n",
 			request->payload_size, sizeof(*payload));
 		return -EINVAL;
 	}
 
 	payload = request->payload;
 
-	dev_dbg(&gcam->bundle->dev, "received metadata for request %u, frame %u, stream %u\n",
+	dev_dbg(&gcam->bundle->dev,
+		"received metadata for request %u, frame %u, stream %u\n",
 		payload->request_id, payload->frame_number, payload->stream);
 
 	return 0;
@@ -777,9 +778,11 @@ static ssize_t gb_camera_op_capabilities(void *priv, char *data, size_t len)
 	return capabilities_len;
 }
 
-static int gb_camera_op_configure_streams(void *priv, unsigned int *nstreams,
-					  unsigned int *flags, struct gb_camera_stream *streams,
-					  struct gb_camera_csi_params *csi_params)
+static int
+gb_camera_op_configure_streams(void *priv, unsigned int *nstreams,
+			       unsigned int *flags,
+			       struct gb_camera_stream *streams,
+			       struct gb_camera_csi_params *csi_params)
 {
 	struct gb_camera *gcam = priv;
 	struct gb_camera_stream_config *gb_streams;
@@ -805,8 +808,8 @@ static int gb_camera_op_configure_streams(void *priv, unsigned int *nstreams,
 	if (*flags & GB_CAMERA_IN_FLAG_TEST)
 		gb_flags |= GB_CAMERA_CONFIGURE_STREAMS_TEST_ONLY;
 
-	ret = gb_camera_configure_streams(gcam, &gb_nstreams,
-					  &gb_flags, gb_streams, csi_params);
+	ret = gb_camera_configure_streams(gcam, &gb_nstreams, &gb_flags,
+					  gb_streams, csi_params);
 	if (ret < 0)
 		goto done;
 	if (gb_nstreams > *nstreams) {
@@ -863,8 +866,8 @@ static const struct gb_camera_ops gb_cam_ops = {
  * DebugFS
  */
 
-static ssize_t gb_camera_debugfs_capabilities(struct gb_camera *gcam,
-					      char *buf, size_t len)
+static ssize_t gb_camera_debugfs_capabilities(struct gb_camera *gcam, char *buf,
+					      size_t len)
 {
 	struct gb_camera_debugfs_buffer *buffer =
 		&gcam->debugfs.buffers[GB_CAMERA_DEBUGFS_BUFFER_CAPABILITIES];
@@ -978,12 +981,11 @@ static ssize_t gb_camera_debugfs_configure_streams(struct gb_camera *gcam,
 	for (i = 0; i < nstreams; ++i) {
 		struct gb_camera_stream_config *stream = &streams[i];
 
-		buffer->length += sprintf(buffer->data + buffer->length,
-					  "%u;%u;%u;%u;%u;%u;%u;",
-					  stream->width, stream->height,
-					  stream->format, stream->vc,
-					  stream->dt[0], stream->dt[1],
-					  stream->max_size);
+		buffer->length +=
+			sprintf(buffer->data + buffer->length,
+				"%u;%u;%u;%u;%u;%u;%u;", stream->width,
+				stream->height, stream->format, stream->vc,
+				stream->dt[0], stream->dt[1], stream->max_size);
 	}
 
 	ret = len;
@@ -993,8 +995,8 @@ done:
 	return ret;
 };
 
-static ssize_t gb_camera_debugfs_capture(struct gb_camera *gcam,
-					 char *buf, size_t len)
+static ssize_t gb_camera_debugfs_capture(struct gb_camera *gcam, char *buf,
+					 size_t len)
 {
 	unsigned int request_id;
 	unsigned int streams_mask;
@@ -1034,8 +1036,8 @@ static ssize_t gb_camera_debugfs_capture(struct gb_camera *gcam,
 	return len;
 }
 
-static ssize_t gb_camera_debugfs_flush(struct gb_camera *gcam,
-				       char *buf, size_t len)
+static ssize_t gb_camera_debugfs_flush(struct gb_camera *gcam, char *buf,
+				       size_t len)
 {
 	struct gb_camera_debugfs_buffer *buffer =
 		&gcam->debugfs.buffers[GB_CAMERA_DEBUGFS_BUFFER_FLUSH];
@@ -1064,17 +1066,20 @@ static const struct gb_camera_debugfs_entry gb_camera_debugfs_entries[] = {
 		.mask = S_IFREG | 0444,
 		.buffer = GB_CAMERA_DEBUGFS_BUFFER_CAPABILITIES,
 		.execute = gb_camera_debugfs_capabilities,
-	}, {
+	},
+	{
 		.name = "configure_streams",
 		.mask = S_IFREG | 0666,
 		.buffer = GB_CAMERA_DEBUGFS_BUFFER_STREAMS,
 		.execute = gb_camera_debugfs_configure_streams,
-	}, {
+	},
+	{
 		.name = "capture",
 		.mask = S_IFREG | 0666,
 		.buffer = GB_CAMERA_DEBUGFS_BUFFER_CAPTURE,
 		.execute = gb_camera_debugfs_capture,
-	}, {
+	},
+	{
 		.name = "flush",
 		.mask = S_IFREG | 0666,
 		.buffer = GB_CAMERA_DEBUGFS_BUFFER_FLUSH,
@@ -1152,9 +1157,8 @@ static int gb_camera_debugfs_init(struct gb_camera *gcam)
 
 	gcam->debugfs.root = debugfs_create_dir(dirname, gb_debugfs_get());
 
-	gcam->debugfs.buffers =
-		vmalloc(array_size(GB_CAMERA_DEBUGFS_BUFFER_MAX,
-				   sizeof(*gcam->debugfs.buffers)));
+	gcam->debugfs.buffers = vmalloc(array_size(
+		GB_CAMERA_DEBUGFS_BUFFER_MAX, sizeof(*gcam->debugfs.buffers)));
 	if (!gcam->debugfs.buffers)
 		return -ENOMEM;
 
@@ -1307,7 +1311,7 @@ static void gb_camera_disconnect(struct gb_bundle *bundle)
 
 static const struct greybus_bundle_id gb_camera_id_table[] = {
 	{ GREYBUS_DEVICE_CLASS(GREYBUS_CLASS_CAMERA) },
-	{ },
+	{},
 };
 
 #ifdef CONFIG_PM
@@ -1332,7 +1336,8 @@ static int gb_camera_resume(struct device *dev)
 
 	ret = gb_connection_enable(gcam->connection);
 	if (ret) {
-		dev_err(&gcam->bundle->dev, "failed to enable connection: %d\n", ret);
+		dev_err(&gcam->bundle->dev, "failed to enable connection: %d\n",
+			ret);
 		return ret;
 	}
 
@@ -1349,16 +1354,15 @@ static int gb_camera_resume(struct device *dev)
 }
 #endif
 
-static const struct dev_pm_ops gb_camera_pm_ops = {
-	SET_RUNTIME_PM_OPS(gb_camera_suspend, gb_camera_resume, NULL)
-};
+static const struct dev_pm_ops gb_camera_pm_ops = { SET_RUNTIME_PM_OPS(
+	gb_camera_suspend, gb_camera_resume, NULL) };
 
 static struct greybus_driver gb_camera_driver = {
-	.name		= "camera",
-	.probe		= gb_camera_probe,
-	.disconnect	= gb_camera_disconnect,
-	.id_table	= gb_camera_id_table,
-	.driver.pm	= &gb_camera_pm_ops,
+	.name = "camera",
+	.probe = gb_camera_probe,
+	.disconnect = gb_camera_disconnect,
+	.id_table = gb_camera_id_table,
+	.driver.pm = &gb_camera_pm_ops,
 };
 
 module_greybus_driver(gb_camera_driver);
